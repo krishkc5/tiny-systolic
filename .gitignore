@@ -13,3 +13,7 @@ results.xml
 test/output/
 test/gate_level_netlist.v
 runs/
+
+# Large local evidence package; compact evidence is versioned
+reports/technical/deliverables/*.zip
+!reports/technical/evidence/k1-wave.vcd

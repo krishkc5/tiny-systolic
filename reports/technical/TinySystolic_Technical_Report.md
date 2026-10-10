@@ -1,0 +1,444 @@
+# TinySystolic technical report
+
+Design implementation and pre fabrication verification
+
+Project owner Krishna Chemudupati
+Evidence cutoff 10 October 2026
+Platform Tiny Tapeout SKY26d using SKY130A
+
+## Abstract
+
+TinySystolic is a compact digital matrix accelerator built around four signed INT4 multiply–accumulate processing elements in a 2 by 2 output-stationary systolic array. A synchronous byte-wide interface streams two operand bytes per reduction step and reads four signed 16-bit results. The controller supports reduction lengths from 1 through 16, input bubbles, enable pauses, abort, reset, and explicit protocol-error reporting. A host computer supplies weights and performs the neural-network operations outside matrix multiplication.
+
+The implementation progresses from a single-MAC scaffold to a complete array and then to an area-optimized design using exact 12-bit internal sums. Relative to the passing 16-bit baseline, routed standard-cell area decreases from 13,309.0 to 11,649.9 square micrometers, a 12.466% reduction, with unchanged interface and transaction cycle counts. Worst reported setup slack improves from +5.062 to +6.255 ns under the same 20 ns physical clock constraint. Both versions fit the same one-tile floorplan. [E1–E4]
+
+Functional verification includes exhaustive signed multiplier pairs, 1,600 core matrix operations, package-level arithmetic and recovery tests, and 6,660 matrix-tile transactions from a real digit-classification network. All 360 held-out neural-network predictions agree exactly with the quantized software model in both RTL and functional gate-level simulation. INT4 accuracy is 327/360, or 90.83%, versus 344/360, or 95.56%, for the floating-point model. [E5–E8]
+
+## Pre fabrication assessment
+
+The official workflows pass, including GDS generation, precheck, documentation and gate-level regression. A deeper review nevertheless identifies 183 maximum-transition violations at the worst slow corner and one clock-buffer fanout violation in the detailed STA reports. These are unresolved review items, not waived conditions. The report therefore distinguishes successful automated execution from complete electrical signoff. No fabricated-silicon measurements, power validation or maximum-frequency characterization are claimed. [E3, E4]
+
+# 1 Scope and evidence standards
+
+This report consolidates the development history, design rationale, interface specification, test methodology, observed results and reproducibility information for the current accelerator. Its audience is a hardware reviewer, prospective project evaluator, or engineer preparing the design for fabrication. The objective is to make each important claim traceable to a source revision, executable test, or archived physical report.
+
+The exact RTL and model revision validated by the optimized physical workflow is f5fd8804b6859e741a871e7ea7580a31b0cb1a06. Later documentation-only commits do not imply that a different hardware version has been hardened. The passing 16-bit comparison revision is 8f49f602017c429c50157e5656e8ad2f33f91345. These immutable identifiers are more useful than the changing branch name main. [E1]
+
+| Evidence class | Meaning in this report |
+| --- | --- |
+| RTL simulation | Execution of synthesizable logic against directed and seeded randomized inputs. |
+| Functional gate simulation | Same pin-level tests against the generated netlist and SKY130 library models with unit delays. |
+| Static physical analysis | Routed area and multicorner timing reports from the official build; not measurements on a physical chip. |
+| Analytical result | A formula derived from the architecture or protocol, with its assumptions stated. |
+| Not established | Silicon behavior, energy efficiency, peak measured frequency and an implemented scalar speedup baseline. |
+
+A PASS entry means the cited test or workflow completed successfully. It is not shorthand for exhaustive state-space coverage, comprehensive signoff, or manufacturing yield. Local simulations, GitHub simulations, and physical analyses are separate evidence sources; repeated execution of the same vectors is not counted as independent statistical coverage.
+
+The evidence bundle preserves original metric JSON, timing summaries, selected detailed checks, JUnit-style test results, waveform evidence, source snapshots and workflow metadata. A manifest records SHA-256 hashes. The GitHub build log included in the compact evidence set has terminal color codes and ephemeral URL query strings removed; technical result lines are retained. The source archive and raw physical outputs remain separately identifiable.
+
+## Document navigation
+
+Sections 2–7 describe the design and protocol. Sections 8–9 assess verification. Sections 10–14 cover workflows, physical results and electrical findings. Sections 15–18 cover ML and performance. Sections 19–21 document readiness, reproduction and sources.
+
+# 2 Development history and requirements
+
+| Stage | Revision | What was established |
+| --- | --- | --- |
+| Single-MAC scaffold | 33a2198 | Signed arithmetic and basic Tiny Tapeout bring-up interface; superseded GDS run was cancelled. |
+| Complete array | 8f49f60 | Four PEs, streaming controller, functional tests, passing routed build and precheck. |
+| Optimized array and ML | f5fd880 | 12-bit internal sums, real inference regression, passing physical workflow and lower routed area. |
+| Evidence compilation | After f5fd880 | Report generation and deeper signoff audit; no RTL modification. |
+
+The project started as a portfolio-oriented ML accelerator rather than a standalone general-purpose processor. Its scope is deliberately narrow: compute a small matrix product accurately, expose a simple controllable interface, fit a Tiny Tapeout tile, and produce defensible area and verification evidence. Neural-network training, weight storage and non-matrix operators reside on the host.
+
+| Requirement | Implementation or acceptance criterion |
+| --- | --- |
+| Arithmetic | Signed INT4 inputs; C = A[2,K] × B[K,2]; 1 ≤ K ≤ 16. |
+| Result range | Exact 16-bit signed interface; no saturation or requantization in hardware. |
+| Host protocol | One 8-bit input bus, one 8-bit output bus, four input/control and four status pins. |
+| Progress and recovery | Ready, busy, done, sticky error; synchronous reset and enabled abort. |
+| Stalls | NOP inserts bubbles; ena low freezes both controller and datapath. |
+| Physical target | SKY26d, one tile; intended operation at 10 MHz; actual STA constraint 20 ns. |
+
+INT4 and a 2 by 2 array were selected to limit multiplier and storage cost. The implementation does not promise support for arbitrary array dimensions or reduction lengths without revision. Larger matrix products are decomposed into tiles, and the host combines partial sums in a wider integer format. No claim that this chip outperforms a laptop or GPU follows from the chosen architecture.
+
+The initial scaffold tests are a development milestone, not the final accelerator evidence. The cancelled scaffold physical build is explicitly excluded from signoff. The complete baseline and optimized builds provide the physical comparisons. [E1, E2]
+
+# 3 Architecture and module boundaries
+
+![Figure 1  Logical architecture and operand movement. This is a conceptual block diagram, not a placement map.](figures/architecture.png)
+
+Each processing element retains one output sum while operands travel through the array. Values from A move horizontally; values from B move vertically. Row-one A and column-one B inputs are delayed by one enabled cycle before entering their respective edge PEs. Operand-valid bits follow the same paths. The lower-right PE therefore receives the last matching product two enabled cycles after the first PE receives it.
+
+| Module | Responsibility |
+| --- | --- |
+| mac_pe.v | Signed product, sign extension and enabled accumulation; parameterized width with a 16-bit default. |
+| systolic_pe.v | Operand and valid forwarding plus a 12-bit MAC instance; sign-extended 16-bit sum output. |
+| systolic_array.v | Four PEs and boundary skew; unskewed quartet input; common clear and step. |
+| project.v | Tiny Tapeout ports, command decoder, byte assembly, K quota, drain and result-byte selection. |
+
+The array itself can accept a complete quartet every enabled cycle. The wrapper cannot: four 4-bit inputs require 16 bits of payload, whereas its input bus transfers only eight bits per cycle. The wrapper first saves the A pair and injects the quartet when the B byte arrives. This choice eliminates a large operand buffer at the cost of sustained input bandwidth. It also keeps the internal core independently testable at full rate. [E1, E5]
+
+# 4 Arithmetic representation and exact width reduction
+
+Operands are two’s-complement four-bit integers in the range −8 through +7. The multiplier produces a signed eight-bit value. Its largest positive value is (−8)×(−8) = +64; its most negative value is (−8)×(+7) = −56. Treating this product as unsigned or extending it with zeros would corrupt negative products, so the implementation explicitly replicates the product sign bit before addition.
+
+```text
+p[k] = signed_INT4(a[k]) × signed_INT4(b[k])
+C[i,j] = sum over k = 0 .. K−1 of A[i,k] × B[k,j]
+−56K ≤ C[i,j] ≤ 64K
+```
+
+At K = 16, every final result and every accumulation prefix lies between −896 and +1024. A signed 11-bit value has a maximum of +1023 and is insufficient for the positive endpoint. A signed 12-bit value spans −2048 through +2047 and is sufficient. Reducing the sum width is therefore exact within the stated workload; it is not approximate arithmetic or further quantization.
+
+```text
+12-bit internal sum → 16-bit output
+output[15:12] = four copies of sum[11]
+output[11:0]  = sum[11:0]
+```
+
+The optimized array stores 48 sum bits across four PEs instead of 64, reducing accumulator storage by 16 bits, or 25%. The adder paths and parts of the readback logic also become simpler after synthesis. This storage percentage is not the area reduction of the whole chip. Routed standard-cell area falls by 12.466%, because multipliers, control, forwarding registers, clock cells and routing support remain.
+
+The reusable MAC still defaults to 16 bits; the PE selects ACC_W = 12. The core contract remains K ≤ 16. The core does not independently count incoming samples, so clients bypassing the chip wrapper must obey that contract. The top-level controller enforces the quota: after the Kth B byte, it enters DRAIN and rejects further DATA commands. Invalid START commands do not reset an ongoing sum. [E1]
+
+## What would invalidate this optimization
+
+Increasing K, supporting a wider operand format, or adding accumulation across START operations requires a new width analysis and regression. For example, repeating transactions without clearing would not be covered by the present bound. The current protocol clears sums at each accepted START and combines larger reductions on the host. Tests exercise +1024 and −896 explicitly, as well as mixed-sign and randomized cases. [E5]
+
+# 5 Dataflow alignment and pipeline behavior
+
+![Figure 2  Derived full-rate schedule for K = 4. Each label identifies the matching reduction index accumulated by that PE.](figures/schedule.png)
+
+At the first injection edge, PE00 accumulates the k = 0 product. One cycle later PE01 and PE10 accumulate their k = 0 products, while PE00 can accept k = 1. PE11 sees k = 0 after two hops. The row/column skew makes the operand index arriving from the left equal to the index arriving from above. Without that skew, products from different reduction positions would be combined.
+
+Each PE forwards A, B and their independent valid flags on an enabled step. Its accumulator updates only when step and both incoming valid flags are asserted. A bubble therefore travels through the fabric instead of reusing stale operands. A single missing quartet must suppress all four corresponding products at the correct delayed positions. The direct-core tests insert random bubbles and compare final sums against an independent integer calculation.
+
+When ena is low, the wrapper deasserts injection and the core receives step = 0. Forwarding registers, skew registers, valid bits and accumulators all hold. Freezing only the controller would be incorrect because the two operand paths could advance out of alignment. Reset clears state regardless of ena. Clear has priority over accumulation and invalidates the pipeline.
+
+With continuous valid quartets and no pauses, K + 2 enabled edges are sufficient, counting the first injection edge as one. The two-edge tail is still needed after the last injection. The chip wrapper injects only on accepted B bytes, so its DATA stream has at least one non-injection edge between quartets. It explicitly waits two enabled edges after the final injection before asserting DONE. [E1, E5]
+
+# 6 External interface and command protocol
+
+| Signal | Direction | Meaning |
+| --- | --- | --- |
+| ui_in[7:0] | Input | Operand or START configuration byte. |
+| uo_out[7:0] | Output | Current result byte in DONE; zero otherwise. |
+| uio[2:0] | Input | Command code sampled at each enabled rising edge. |
+| uio[3] | Input | Reserved and ignored. |
+| uio[4] | Output | DATA-ready when LOAD and ena = 1. |
+| uio[5] | Output | Busy in LOAD or DRAIN. |
+| uio[6] | Output | DONE, held until valid START, ABORT or reset. |
+| uio[7] | Output | Sticky protocol error. |
+| clk, rst_n, ena | Input | Clock; synchronous active-low reset; common enable. |
+
+The output-enable mask is fixed at hexadecimal F0. The host must drive only uio[3:0], never the four status pins. READY is specifically permission to accept DATA; it is not a general indication that every command is legal. START is accepted in IDLE or DONE even though DATA-ready is low in those states.
+
+| Code | Command | Acceptance and effect |
+| --- | --- | --- |
+| 0 | NOP | No host transfer; enabled pipeline steps continue. |
+| 1 | START | Only IDLE/DONE and ui_in[7:4] = 0; low nibble is K−1. Clears sums and prior result. |
+| 2 | DATA | Only LOAD; first byte is A pair, second byte B pair. |
+| 3 | READ | Only DONE; advances result pointer modulo eight. |
+| 4 | ABORT | Any state when enabled; clears computation and returns IDLE. |
+| 5–7 | Invalid | Sets sticky error without accepting data. |
+
+For reduction index k, the first DATA byte is {A[1,k], A[0,k]} and the second is {B[k,1], B[k,0]}. Each operand occupies one two’s-complement nibble. Commands are level-sampled, not edge-detected: holding DATA or READ across several clock edges performs several transfers. Host signals must meet the chip clock’s setup and hold requirements. No asynchronous clock-domain crossing is implemented. [E1]
+
+# 7 Controller recovery and transaction example
+
+![Figure 3  Controller states. Unsupported commands raise ERROR while the active operation remains intact.](figures/state_machine.png)
+
+The LOAD state tracks both the remaining quartet count and whether an A byte has been stored. NOP may occur between either byte without consuming it. The last accepted B byte injects the final quartet and changes the state to DRAIN. The first enabled drain edge advances the pipeline; the second finishes it and changes the state to DONE. A READ on that second edge is still rejected, because the state before the edge was DRAIN.
+
+READ advances the pointer rather than returning a newly selected byte on that same edge. The host samples the current byte before the edge. The byte order is C00 low/high, C01 low/high, C10 low/high, C11 low/high. Reads wrap and do not erase DONE; NOP holds the current byte. A successful new START discards old results and resets the pointer. A rejected START preserves both the pointer and the data.
+
+![Figure 4  Trace captured from Icarus simulation for K = 1. Cycle 0 applies reset. Blue cells indicate READ commands. Byte and status fields are hexadecimal.](figures/trace.png)
+
+The example uses A = [−8, 7] transposed and B = [−2, 3]. START sends 00; DATA sends 78 then 3E. The results are 16, −24, −14 and 21, represented as bytes 10 00 E8 FF F2 FF 15 00. The trace and VCD are archived; they are generated from the validated RTL, not drawn from an assumed waveform. [E9]
+
+# 8 Verification strategy and coverage limits
+
+Verification is layered to isolate arithmetic, alignment and protocol defects. The standalone MAC test enumerates all 256 ordered pairs of legal signed operands. This is exhaustive for a single product, not for a complete matrix or controller history. Accumulation, invalid hold, clear priority and reset are checked separately.
+
+| Layer | Cases or method | Purpose |
+| --- | --- | --- |
+| MAC | 256 operand pairs plus directed controls | Verify signed multiply and sign extension. |
+| Core array | 100 trials per K, K = 1..16; 1,600 operations | Exercise all four outputs, skew, bubbles, freezes and clear/reset. |
+| Chip arithmetic | 497 primary transactions | Drive real byte pins; test exhaustive repeated-pair matrices, extremes, zeros, random cases and identity. |
+| Protocol | Directed malformed and recovery sequences | Test rejected START/READ/DATA, sticky errors, disabled commands, wrap and each reset/abort phase. |
+| Software reference | Three unit tests | Check identity, extrema, and rejection of invalid shapes/ranges. |
+| ML | 360 images and 6,660 tile transactions | Exercise a real workload and multilayer host-assisted data path. |
+
+The primary chip arithmetic count is 256 K = 1 repeated-pair cases, 48 extrema/zero cases, 192 seeded random cases and one identity case. Additional recovery transactions are not included in that 497 figure. Each no-stall arithmetic transaction checks the exact protocol count 2K + 11. Core tests count K + 2 steps for their full-rate cases. [E5]
+
+The chip randomized stream uses seed 20261010. The direct-core SystemVerilog test relies on the simulator’s deterministic default random state; it is reproducible in a fixed simulator configuration but not guaranteed to produce identical vectors across simulator versions. The ML data split and training initialization use seed 42.
+
+No formal equivalence proof, exhaustive controller model checking, mutation testing, or measured functional/code-coverage percentage is available. Protocol tests are intentionally directed; arithmetic randomization is not a substitute for a complete malformed-command state-space exploration. These limits are recorded rather than presenting the regression count as a probability of silicon correctness.
+
+# 9 Observed functional verification results
+
+The optimized design passes strict Verilator lint, standalone MAC/core simulations, Python reference tests, and the combined package-level cocotb suite. The same package-level suite was also executed locally against the archived 16-bit baseline source. The baseline and optimized designs produce identical expected arithmetic results, quantized hidden activations, final predictions and ideal protocol cycle counts. [E5–E8]
+
+| Final gate-level test | Result | Simulated duration | Runner time |
+| --- | --- | --- | --- |
+| complete_chip_arithmetic | PASS | 1,812,000 ns | 4.878 s |
+| protocol_and_recovery | PASS | 35,200 ns | 0.059 s |
+| digits_inference | PASS | 28,638,100 ns | 109.643 s |
+
+These durations come from the archived optimized gate-level results XML. Three test cases passed, with zero recorded failures, errors or skips. Runner wall time reflects simulation workload and runner performance; it is not accelerator inference latency. The testbench introduces settling intervals between some operations, so total simulation duration also differs from the ideal protocol-cycle count. [E6]
+
+## Meaning of gate-level validation
+
+The official workflow compiles the generated gate-level netlist with SKY130 primitive and standard-cell models. Its recorded Icarus command includes GL_TEST, FUNCTIONAL, USE_POWER_PINS, SIM and UNIT_DELAY=#1. The testbench uses the same external interface as RTL testing. This validates logical connectivity and arithmetic after synthesis and implementation under those library-model assumptions.
+
+It is not full extracted-delay back-annotated simulation: no SDF annotation is evidenced in the reviewed command or testbench. Multicorner setup/hold analysis is performed separately by static timing analysis. Electrical transition or fanout violations are not made harmless by a passing functional netlist test.
+
+## Evidence retention
+
+The retained result XML preserves test names, durations, source locations and random-seed metadata. The ML gate-level JSON records 360 images, 327 correct classifications, 6,660 tiles, zero mismatches and 286,380 protocol cycles. The waveform file is included in the larger evidence archive. Earlier local test summaries are retained as intermediate records; overwritten logs are not reconstructed or represented as original observations.
+
+# 10 Build and verification workflows
+
+![Figure 5  Evidence-producing workflow. Detailed report review is an additional step beyond workflow status.](figures/workflow.png)
+
+The repository was created from TinyTapeout/ttsky-verilog-template. Official actions target ttsky26d with pdk sky130A. The project identifies tt_um_krishkc5_tinysystolic as its top module and lists all four RTL files in info.yaml and the test Makefile. The local and GitHub verification paths share test sources. [E1, E10]
+
+| Workflow or job | Role |
+| --- | --- |
+| Verify accelerator | Installs simulators and Python test dependencies; runs make check. |
+| test | Official Icarus/cocotb RTL regression and results validation. |
+| docs | Builds project documentation from submission metadata. |
+| gds | Runs the official synthesis and physical implementation flow. |
+| precheck | Checks layout rules, boundary/pins, layers, naming and submission conventions. |
+| gl_test | Reuses package-level tests on the generated standard-cell netlist. |
+| viewer | Publishes the layout viewer through GitHub Pages. |
+
+The optimized GDS workflow completes in 7 minutes 48 seconds; its GDS, precheck, gate-level test and viewer jobs all report success. Separate RTL, verification and documentation workflows also pass. A docs-only result-recording commit uses skip-ci, so the authoritative hardened source remains f5fd880 rather than whichever documentation commit is newest. [E2]
+
+The action log records LibreLane 3.0.14 and container digest sha256:f91b21d75f79871f9ccf37451020b5d2f7b3236881a997ff709c561e8280a30f. Archive metadata records Tiny Tapeout support-tools identifier main 01d5d281. Action tags and some dependency branches remain mutable; exact replay should retain these recorded identities and the artifact bundle rather than rely solely on today’s template state.
+
+# 11 Physical layout evidence
+
+![Figure 6  Baseline 16-bit-sum layout from the successful baseline GDS artifact.](figures/../evidence/layout-baseline/gds_render.png)
+
+![Figure 7  Optimized 12-bit-sum layout from the successful optimized GDS artifact.](figures/../evidence/layout-optimized/gds_render.png)
+
+Both renders correspond to the same 161.00 by 111.52 micrometer floorplan. They show physical geometry from the build, not die photographs. Layer colors are viewer conventions. Functional regions are not annotated because no placement-to-RTL region mapping was established. Standard-cell area, not visual density alone, supports the area comparison. [E3]
+
+# 12 Routed optimization results
+
+![Figure 8  Routed standard-cell area excluding filler, using identical metric keys from the two final reports.](figures/area.png)
+
+| Metric | 16-bit baseline | 12-bit optimized |
+| --- | --- | --- |
+| Standard-cell area | 13,309.0 µm² | 11,649.9 µm² |
+| Reported standard-cell utilization | 80.6934% | 70.6342% |
+| Sequential cells | 112 | 96 |
+| Worst setup slack | +5.062258 ns | +6.254569 ns |
+| Worst hold slack | +0.113613 ns | +0.115210 ns |
+| Final Magic DRC / LVS errors | 0 / 0 | 0 / 0 |
+| Generic synthesis cells | 1,284 | 1,148 |
+| Tile allocation | 1 × 1 | 1 × 1 |
+
+The area change is (13,309.0 − 11,649.9) / 13,309.0 = 12.466%. Worst setup slack improves by 1.192311 ns at the same constraint. The quoted utilization is the tool’s standard-cell metric, not standard-cell area divided by the full external tile outline. That distinction prevents mixing floorplan/core denominators.
+
+The all-instance metric remains 16,493.3 square micrometers in both reports, because the flow fills remaining placement space. Total instance count rises from 2,540 to 2,802 after optimization; this does not contradict a smaller active design. Filler and physical-only cells make all-instance counts unsuitable as a direct measure of arithmetic complexity. [E3]
+
+The result is a one-run-per-variant physical comparison, not a statistical place-and-route study across random seeds. It demonstrates a beneficial observed implementation under the selected flow. It does not establish a universal 12.466% gain for every tool version or constraint. The narrower accumulator does not alter matrix precision, ideal latency or sustained bus bandwidth, and the one-tile purchase cost remains unchanged.
+
+# 13 Timing constraints and multicorner interpretation
+
+The project metadata lists an intended 10 MHz operating rate, but the actual physical configuration and final SDC use a 20 ns clock period, equivalent to a 50 MHz constraint. The two facts are compatible but distinct: the report describes the tool constraint actually analyzed, not a measured silicon operating frequency. The final SDC specifies 4 ns external input and output delays, early/late derates of 0.95/1.05, and explicit interface loads and driving-cell assumptions. [E4]
+
+| Extracted corner | Setup slack ns | Hold slack ns | Slew violations |
+| --- | --- | --- | --- |
+| nom tt 25 C 1.80 V | 9.691610 | 0.356861 | 0 |
+| nom ss 100 C 1.60 V | 6.337322 | 0.954660 | 110 |
+| nom ff −40 C 1.95 V | 10.384819 | 0.117489 | 0 |
+| min tt 25 C 1.80 V | 9.754802 | 0.351257 | 0 |
+| min ss 100 C 1.60 V | 6.445571 | 0.945011 | 77 |
+| min ff −40 C 1.95 V | 10.428010 | 0.115210 | 0 |
+| max tt 25 C 1.80 V | 9.641793 | 0.363360 | 0 |
+| max ss 100 C 1.60 V | 6.254569 | 0.966035 | 183 |
+| max ff −40 C 1.95 V | 10.350625 | 0.119897 | 0 |
+
+The labels nom/min/max distinguish extraction conditions; tt/ss/ff distinguish process corners, followed by temperature and voltage. The overall minimum setup slack occurs at max_ss_100C_1v60. The minimum hold slack occurs at min_ff_n40C_1v95. Reported setup and hold violation counts and total negative slack are zero across the summarized corners. Maximum-capacitance violation counts are also zero. Values are rounded for presentation; the JSON preserves full precision.
+
+A positive setup margin must not be converted mechanically into a maximum-frequency claim by subtracting slack from 20 ns. I/O delays, uncertainty, derating, endpoint classes and clock behavior matter. Moreover, the register-to-register setup summary is N/A, with an Infinity sentinel in JSON. This deserves a reporting-semantics and path-coverage audit; it is not evidence that every internal path is absent or unconstrained. No register-to-register maximum-frequency result is asserted here.
+
+# 14 Electrical findings that remain open
+
+The detailed checks contain violations that did not fail the official workflow. They must remain visible in a rigorous pre-fabrication assessment. Automated PASS status, zero layout-rule errors and positive setup/hold slack do not imply zero design-rule or electrical violations in static timing reports. [E4]
+
+| Finding | Recorded optimized result | Required follow-up |
+| --- | --- | --- |
+| Maximum transition | 183 violating pins at max_ss_100C_1v60; limit 0.750 ns | Review source nets, buffering/drive strength, constraints and accepted flow policy. |
+| Largest shown transition | 0.986309 ns at _1058_/A1 and _1050_/A; slack −0.236309 ns | Verify worst contributors and repair or document an authorized exception. |
+| Clock fanout | clkbuf_0_clk/X has fanout 16 against limit 10 | Review clock-tree constraints and whether the reported limit applies to this clock buffer. |
+| Register-to-register setup summary | N/A or Infinity sentinel | Confirm report semantics and internal path coverage. |
+| Parasitic annotation | 17 unannotated drivers; zero partial drivers | Confirm the listed unused inputs and constant drivers are intentionally excluded. |
+
+The baseline already had 299 worst-corner slew violations and one fanout violation. Optimization reduces the worst slew count to 183, but reducing a count does not close the issue. Slow corners contain the transition violations; typical and fast corners report none. The fanout violation appears on the same clock-buffer class in the corner reports.
+
+The unannotated-driver list contains uio_in[3:7] and constant HI/LO drivers, which is consistent with reserved/status input paths and constant nets. This is an observation, not a blanket waiver. The remaining annotated-net coverage and path classification should be checked directly before release.
+
+No exception approval, constraint correction, or electrical repair was performed as part of report compilation. The validated RTL and archived results are preserved unchanged. A follow-up engineering change should be isolated, re-hardened and compared against this report. Operating at a slower clock alone does not guarantee that transition or fanout limits will be satisfied.
+
+Recommendation: treat the design as functionally verified with passing submission precheck, but retain an open electrical-review gate before paying for or submitting the final fabrication revision. This qualification supersedes any earlier shorthand that described the design simply as “all checks clean.”
+
+# 15 Machine learning experiment design
+
+The demonstration uses scikit-learn’s 1,797-example, 8 by 8 handwritten-digit dataset. A new stratified 80/20 split with random_state = 42 creates 1,437 training and 360 held-out examples. This is a split of the scikit-learn subset, not the original UCI full-dataset benchmark split. It is not a writer-disjoint evaluation. Inputs contain 64 pixels originally ranging from 0 through 16. [E7, E11]
+
+The floating-point model is an MLP with layer dimensions 64 → 16 → 10, ReLU hidden activation, LBFGS optimization, alpha = 0.01, maximum 2,000 iterations and initialization seed 42. The recorded training run terminates after 157 iterations. Input normalization divides pixels by 16. Training is restricted to one BLAS thread for reproducibility in the pinned software environment.
+
+## Quantization procedure
+
+```text
+For each weight output channel j:
+  sW[j] = max(abs(W[:,j])) / 7
+  qW[:,j] = clip(round(W[:,j] / sW[j]), −7, +7)
+Input activations:
+  qX = clip(round((pixels / 16) × 7), 0, 7)
+```
+
+The hardware accepts the full signed INT4 range −8..7, but this symmetric weight quantizer uses −7..7. Nonnegative activations use 0..7, the positive half of the signed range. This is not an unsigned four-bit datapath supporting 0..15. Weight scales are per output channel. Biases, scale factors and ReLU are evaluated on the host.
+
+```text
+h = max((qX × qW1) × (sW1 / 7) + b1, 0)
+sH = max(h over training samples and hidden units) / 7
+qH = clip(round(h / sH), 0, 7)
+logits = (qH × qW2) × (sH × sW2) + b2
+```
+
+Only training examples determine hidden-activation calibration. The test labels are used for evaluation, not scale tuning. A small nonzero lower bound protects against zero scales. The fixture stores quantized inputs, weights, scales, biases, reference hidden values, labels and predictions, plus split indices. The experiment uses post-training quantization; no quantization-aware training or validation-driven architecture search was performed. [E7]
+
+# 16 Mapping neural inference to the chip
+
+![Figure 9  Host-assisted mapping of a two-image batch to the fixed 2 by 2 accelerator.](figures/ml_mapping.png)
+
+Two images occupy the two rows of A. For the first layer, each pair of output neurons forms the two columns of B. The 64-element reduction is split into four K = 16 chunks. There are eight neuron pairs, giving 8 × 4 = 32 chip transactions. The host adds the four partial sums for each output in a wider integer before applying scales, bias, ReLU and activation requantization.
+
+The hidden layer has 16 inputs and ten outputs. Five output-neuron pairs each fit one K = 16 transaction, giving five additional transactions. The complete two-image batch therefore uses 37 tile operations, with 2,368 useful MACs. Across 180 batches, the simulation performs 6,660 tile operations and 426,240 useful MACs.
+
+The chip test sends every input byte and reads every output byte through the package-level signals. It does not inject expected accumulator values or bypass the controller. Every tile is compared to an independent host integer dot product. Hidden quantized activations are compared to the fixture after layer one; final predicted classes are compared after layer two. Both the original and optimized RTL pass these checks. The optimized gate-level netlist also passes. [E6, E8]
+
+The design is an accelerator component, not a complete autonomous classifier. It contains no stored model, image sensor, floating-point scaler, activation unit or classifier control program. The host handles preprocessing, larger-reduction accumulation, bias, scaling, ReLU, clipping, class selection and communication scheduling. These boundaries are essential to interpreting the inference result and to designing a future board driver.
+
+# 17 Classification results and numerical fidelity
+
+![Figure 10  Confusion matrix computed from the archived fixture. RTL and gate-level predictions match these same 360 predictions.](figures/confusion.png)
+
+| Execution | Correct | Accuracy |
+| --- | --- | --- |
+| Floating-point software | 344 / 360 | 95.56% |
+| Quantized integer software | 327 / 360 | 90.83% |
+| Baseline and optimized RTL | 327 / 360 | 90.83% |
+| Optimized functional gate netlist | 327 / 360 | 90.83% |
+
+The difference between floating-point and INT4 accuracy is 17 examples, or 4.722 percentage points. Hardware introduces no additional classification loss on this test set: all tile outputs, hidden quantized activations and final predictions match their references. Accuracy is not the same metric as arithmetic correctness. A correctly executed quantized model can still misclassify an image. [E6–E8]
+
+This is one fixed holdout, not cross-validation or a new-writer benchmark. Generalization to mouse-drawn digits is unmeasured. Future model improvements should use a separate validation partition or cross-validation within training data, preserving the held-out test set for an unbiased final comparison.
+
+# 18 Latency throughput and fair comparison
+
+![Figure 11  Derived cycle counts as K varies. Unstalled test cases assert these counts; host software and transport time are excluded.](figures/latency.png)
+
+```text
+Useful MACs per tile = 4K
+Ideal full-rate core cycles = K + 2
+Full chip transaction cycles = 1 + 2K + 2 + 8 = 2K + 11
+```
+
+The transaction count includes START, two DATA bytes per quartet, two drain edges and eight result reads. It excludes initial reset, optional idle edges and enable pauses. The ideal-core count assumes all four input operands are available each enabled cycle. The two curves therefore describe different boundaries and must not be presented as directly comparable end-to-end implementations.
+
+| Metric at K = 16 | Value and interpretation |
+| --- | --- |
+| Ideal core utilization | 16/18 = 88.89% of four-MAC capacity during full-rate core execution. |
+| Complete transaction | 43 cycles for 64 useful MACs, or 1.4884 MACs per cycle. |
+| Transaction utilization | 64 / (4 × 43) = 37.21%, including command and I/O overhead. |
+| Two-image inference | 37 × 43 = 1,591 ideal protocol cycles; 159.1 µs at an assumed 10 MHz. |
+| All 360 images | 286,380 protocol cycles, excluding host work and pauses. |
+
+At the assumed 10 MHz operating rate, the protocol-only throughput is 14.884 million useful MACs/s, or 29.767 million arithmetic operations/s if a multiply and add are counted separately. This is a calculated bound under a perfectly scheduled synchronous host, not measured board throughput. Peak core capacity is four MACs per cycle; the byte-wide bus prevents sustaining that peak through this interface.
+
+No equivalent scheduled single-MAC baseline has been implemented or timed. A claim of measured accelerator speedup, energy efficiency, or host-visible latency improvement would therefore be unsupported. The optimization evaluated here reduces area while preserving cycle counts; it is not a throughput optimization.
+
+# 19 Pre fabrication readiness and design review
+
+| Review item | Evidence status | Disposition |
+| --- | --- | --- |
+| RTL function and control | Directed and randomized regressions pass | Retain source and tests. |
+| Real ML workload | All tile and prediction comparisons pass | Demonstrated on the defined holdout. |
+| GDS and connectivity | GDS, DRC/LVS metrics and precheck pass | Preserve exact artifact revision. |
+| Setup and hold timing | Positive reported margins; zero violations | Review constraints and path coverage. |
+| Electrical transition and fanout | 183 slew plus one fanout violation | Open before final signoff. |
+| Host interface | Protocol documented; synchronous-only | Validate driver and board wiring. |
+| Power and energy | No workload-qualified measurement | Do not claim an efficiency gain. |
+| Fabricated silicon | No silicon exists for this design yet | Post-fabrication bring-up remains. |
+
+The numerical review checks two’s-complement nibble interpretation, sign extension, endpoint range and partial-sum bounds. The controller review checks that unsupported commands cannot consume data, inject excess products, restart a busy operation or change a protected read pointer. Reset/abort clears valid bits as well as sums, preventing stale pipeline values from contaminating the next operation.
+
+The interface review checks the F0 output-enable mask, the requirement to sample before READ advances, and the distinction between DATA-ready and general command legality. Reset is synchronous and must span an active clock edge. The host must not assume that a short asynchronous reset pulse or a command transition between arbitrary clock domains is supported.
+
+Before fabrication, resolve or obtain documented acceptance for the electrical findings, confirm timing-report coverage, select the exact passing hardware revision, and verify the final author and pin documentation. Recheck current shuttle availability, tile allocation, price and compatible devkit before ordering. No purchase or fabrication submission has been performed. A future fix changes the signoff revision and requires another physical and functional regression.
+
+Additional portfolio work includes a board transport driver, calibrated end-to-end performance measurements, a fair scalar baseline, and potentially improved INT4 training. These activities are distinct from the present RTL-function evidence. Any decision to expand K, add buffering or change the host protocol should reopen the relevant bounds and verification requirements.
+
+# 20 Reproduction and evidence preservation
+
+Use the validated source snapshot rather than relying on a changing branch. The archive validated-source-f5fd880.tar.gz contains the RTL, workflow definitions, tests and fixed ML fixture for the measured optimized design. Test reproduction does not require retraining or installing the ML libraries: the fixture is committed with the source.
+
+```text
+git checkout f5fd8804b6859e741a871e7ea7580a31b0cb1a06
+python3.11 -m venv .venv
+. .venv/bin/activate
+pip install -r test/requirements.txt
+make check
+make synth
+make ml-test
+```
+
+The local commands also require make, a C++ compiler, Verilator and Icarus Verilog; Yosys is used by make synth. Recorded local tools include Verilator 5.046, Yosys 0.63, Icarus 13.0, cocotb 2.1.0 and Python 3.11 for cocotb. The runtime’s exact Python patch identification should be taken from retained logs rather than assumed to be identical across local and CI runs. Test requirements pin pytest 8.4.2 and cocotb 2.1.0.
+
+```text
+pip install -r ml/requirements.txt
+make ml-train
+make ml-test
+```
+
+The training requirements pin NumPy 2.4.6, scikit-learn 1.9.1, SciPy 1.17.1, threadpoolctl 3.7.0 and joblib 1.6.0. Retraining can vary across numerical libraries/platforms despite fixed seeds; the archived fixture, not a freshly trained model, is the reference for exact regression. Training uses scikit-learn’s bundled dataset and needs no separate dataset download.
+
+Physical reproduction requires the official SKY26d flow and its SKY130A dependencies. The relevant action tag, container digest, merged configuration, final SDC and support-tool identity are preserved. The CI definitions currently refer to some mutable tags/branches and are not a fully hermetic long-term build lock. The compact evidence manifest plus full baseline/optimized build artifacts make later comparisons more auditable.
+
+The report figures are either original artifact renders, charts calculated from preserved JSON, a trace captured from the exact RTL, or explicitly labelled conceptual diagrams. Regeneration scripts and the structured narrative are retained beside the report. No generated image is presented as a photograph or as an unobserved hardware measurement.
+
+# 21 Sources and evidence index
+
+Bracketed source identifiers in the report refer to the following records. The accompanying manifest enumerates individual files and hashes; the full evidence archive additionally retains the two physical build trees and the gate-level waveform.
+
+| ID | Source and purpose |
+| --- | --- |
+| E1 | Validated source f5fd8804b6859e741a871e7ea7580a31b0cb1a06; baseline 8f49f602017c429c50157e5656e8ad2f33f91345. Source archive and GitHub repository. |
+| E2 | GitHub run JSON: optimized GDS 38081509655, RTL 38081509650, verification 38081509649, docs 38081509652; baseline GDS 38080572847; scaffold GDS 38080148674. |
+| E3 | baseline-metrics.json, optimized-metrics.json, merged config JSON and GDS render images; original GDS_logs artifacts. |
+| E4 | Timing summaries, optimized.sdc, optimized-slow-checks.rpt, full STA corner directories and workflow log. |
+| E5 | test/tb_mac.sv, test/tb_array.sv, test/test.py, model/reference.py and local regression logs. |
+| E6 | optimized-gate-results.xml, ml-gatelevel.json, optimized-actions.log and archived gate-level waveform. |
+| E7 | ml/train.py, requirements, fixtures/digits_int4.json and ml-software.json. |
+| E8 | test/test_ml.py, ml-rtl.json, baseline-ml-tests.log and optimized combined regression. |
+| E9 | k1_trace.sv, k1-trace.csv, k1-trace.log and k1-wave.vcd. |
+| E10 | Official TinyTapeout/ttsky-verilog-template and its copied SKY26d workflows; template base commit 68c3fd3f3ec640e5edcb6a5f74f360ebc016bb2a. |
+| E11 | Alpaydin and Kaynak 1998 Optical Recognition of Handwritten Digits; UCI DOI 10.24432/C50P49; scikit-learn load_digits. |
+
+Dataset-derived fixture content is attributed to E. Alpaydin and C. Kaynak under the UCI-listed Creative Commons Attribution 4.0 license. It is transformed by subset selection and pixel quantization. The repository’s code license does not replace the dataset license. The notice is retained as ml/DATASET-NOTICE.md.
+
+[Project repository](https://github.com/krishkc5/tiny-systolic)
+
+[Optimized physical workflow](https://github.com/krishkc5/tiny-systolic/actions/runs/38081509655)
+
+[Baseline physical workflow](https://github.com/krishkc5/tiny-systolic/actions/runs/38080572847)
+
+[Official SKY template](https://github.com/TinyTapeout/ttsky-verilog-template)
+
+[UCI dataset record](https://doi.org/10.24432/C50P49)

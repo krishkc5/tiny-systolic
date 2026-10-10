@@ -15,7 +15,7 @@ Scope: TinySystolic fixed 2x2 signed INT4 accelerator, K=1..16; candidate f5fd88
 
 ## Before paying/submitting
 
-Candidate GDS, precheck, gate-level tests and docs have passed. Successful source revision: f5fd8804b6859e741a871e7ea7580a31b0cb1a06 (run 38081509655). Confirm final author, pin documentation, shuttle availability, tile order and matching devkit. The user makes the purchase/submission decision. No purchase or fabrication submission has been performed.
+Candidate GDS, precheck, gate-level tests and docs have passed. Successful source revision: f5fd8804b6859e741a871e7ea7580a31b0cb1a06 (run 38081509655). Before final signoff, resolve or obtain documented acceptance for 183 worst-corner transition violations and one clock-buffer fanout violation; review timing path coverage and unannotated drivers. Passing workflows do not close these electrical findings. See the [technical report](technical/TinySystolic_Technical_Report.md), sections 13–14. Confirm final author, pin documentation, shuttle availability, tile order and matching devkit. The user makes the purchase/submission decision. No purchase or fabrication submission has been performed.
 
 ## Explicit limitations
 

@@ -1,0 +1,32 @@
+cd test && /Library/Developer/CommandLineTools/usr/bin/make
+rm -f results.xml
+/opt/homebrew/bin/iverilog -o sim_build/rtl/sim.vvp -s tb -g2012 -I/Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src -f sim_build/rtl/cmds.f  /Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src/project.v /Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src/mac_pe.v /Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src/systolic_pe.v /Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src/systolic_array.v /Users/krishnachemudupati/Projects/tt-systolic-ml/test/tb.v
+rm -f results.xml
+COCOTB_TEST_MODULES=test,test_ml COCOTB_TESTCASE=  COCOTB_TOPLEVEL=tb TOPLEVEL_LANG=verilog       \
+		 /opt/homebrew/bin/vvp -m /Users/krishnachemudupati/Projects/tt-systolic-ml/.venv/lib/python3.11/site-packages/cocotb/libs/libcocotbvpi_icarus.so   sim_build/rtl/sim.vvp -fst   
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:242  in gpi_load_users                  Loaded entry library: '/Users/krishnachemudupati/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/libpython3.11.dylib'
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:234  in gpi_load_users                  Running entry func 'initialize' from loaded library '/Users/krishnachemudupati/Projects/tt-systolic-ml/.venv/lib/python3.11/site-packages/cocotb/simulator.cpython-311-darwin.so'
+     -.--ns INFO     pygpi                              ..ib/pygpi/embed.cpp:115  in initialize                      Using Python 3.11.9 interpreter at /Users/krishnachemudupati/Projects/tt-systolic-ml/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:74   in gpi_print_registered_impl       GPI: VPI support registered
+     0.00ns INFO     cocotb.initialize                  Seeding Python random module with 1791661930
+     0.00ns INFO     cocotb.initialize                  Initialized cocotb v2.1.0 from /Users/krishnachemudupati/Projects/tt-systolic-ml/.venv/lib/python3.11/site-packages/cocotb
+     0.00ns INFO     cocotb.initialize                  Running on Icarus Verilog version 13.0 (stable)
+     0.00ns INFO     cocotb.regression                  Running tests
+     0.00ns INFO     cocotb.regression                  running test.complete_chip_arithmetic (1/3)
+1812000.00ns INFO     cocotb.regression                  test.complete_chip_arithmetic passed
+1812000.00ns INFO     cocotb.regression                  running test.protocol_and_recovery (2/3)
+1847200.00ns INFO     cocotb.regression                  test.protocol_and_recovery passed
+1847200.00ns INFO     cocotb.regression                  running test_ml.digits_inference (3/3)
+30485300.00ns INFO     cocotb.tb                          ML result: {'test_images': 360, 'correct': 327, 'accuracy': 0.9083333333333333, 'rtl_predictions_match_integer_model': True, 'tile_transactions': 6660, 'mismatched_tiles': 0, 'protocol_cycles': 286380, 'cycles_per_two_image_batch': 1591.0, 'host': 'bias, rescaling, ReLU, requantization, tile partial-sum combination, argmax', 'measurement': 'rtl simulation; ideal synchronous host; excludes host processing and transport latency'}
+30485300.00ns INFO     cocotb.regression                  test_ml.digits_inference passed
+30485300.00ns INFO     cocotb.regression                  ***************************************************************************************
+                                                        ** TEST                           STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        ***************************************************************************************
+                                                        ** test.complete_chip_arithmetic   PASS     1812000.00           0.31    5785562.22  **
+                                                        ** test.protocol_and_recovery      PASS       35200.00           0.01    5959746.99  **
+                                                        ** test_ml.digits_inference        PASS    28638100.00           5.09    5621491.40  **
+                                                        ***************************************************************************************
+                                                        ** TESTS=3 PASS=3 FAIL=0 SKIP=0            30485300.00           5.41    5630597.90  **
+                                                        ***************************************************************************************
+FST info: dumpfile tb.fst opened for output.
+python3 -m cocotb_tools.check_results test/results.xml

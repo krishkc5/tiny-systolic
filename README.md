@@ -48,3 +48,9 @@ Improve INT4 accuracy if needed; add a board transport driver, a sequential sche
 ## ML result
 
 The host-assisted digit classifier scores 90.83% on 360 held-out images versus 95.56% for the floating-point model. RTL exactly matches the quantized model across 6,660 matrix tiles. See [ML details](ml/README.md) for host/chip responsibilities and [optimization notes](reports/optimization.md) for the accumulator-width change.
+
+## Technical report and evidence
+
+The [22-page technical report](reports/technical/TinySystolic_Technical_Report.md) compiles design decisions, RTL and gate-level tests, ML validation, workflow history, layout images, and physical comparisons. The [editable Word report](reports/technical/deliverables/TinySystolic_Technical_Report.docx) and [evidence index](reports/technical/README.md) are preserved with the project.
+
+**Electrical review remains open:** detailed STA reports show 183 worst-corner transition violations and one clock-buffer fanout violation despite passing workflows. Timing coverage also needs review. These findings must be resolved or explicitly accepted before final fabrication signoff.

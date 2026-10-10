@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="640" height="260" preserveAspectRatio="xMinYMin meet" viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="640" height="260"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-260)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="10" y="155" width="170" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="62.660000000000004" y="190.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,380) scale(1,-1)">Two images</text>
+			<text x="58.4825" y="173.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,346) scale(1,-1)">2 x 64 INT4 inputs</text>
+			<rect x="235" y="155" width="170" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="286.322" y="190.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,380) scale(1,-1)">Hidden layer</text>
+			<text x="290.2325" y="173.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,346) scale(1,-1)">2 x 16 neurons</text>
+			<rect x="460" y="155" width="170" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="513.662" y="190.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,380) scale(1,-1)">Digit scores</text>
+			<text x="516.731" y="173.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,346) scale(1,-1)">2 x 10 outputs</text>
+			<path d="M 180,185 L 235,185 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="235 185, 229.5973 187.6098, 229.5973 182.3902" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<path d="M 405,185 L 460,185 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="460 185, 454.5973 187.6098, 454.5973 182.3902" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<rect x="90" y="45" width="205" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="144.80599999999998" y="80.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,160) scale(1,-1)">Layer one on chip</text>
+			<text x="154.6055" y="63.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,126) scale(1,-1)">32 tiles with K = 16</text>
+			<rect x="355" y="45" width="205" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="410.478" y="80.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,160) scale(1,-1)">Layer two on chip</text>
+			<text x="422.1075" y="63.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,126) scale(1,-1)">5 tiles with K = 16</text>
+			<path d="M 320,155 L 320,120 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="320 120, 322.6098 125.4027, 317.3902 125.4027" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<text x="185.785" y="127" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,254) scale(1,-1)">Host combines partial sums and applies scales / bias / ReLU</text>
+			<text x="143.615" y="14" style="font-family: Helvetica; font-size: 11px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,28) scale(1,-1)">37 transactions per image pair; weights are streamed, not stored on chip</text>
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="640" height="290" preserveAspectRatio="xMinYMin meet" viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="640" height="290"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-290)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="10" y="120" width="122" height="62" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="33.986" y="156.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,312) scale(1,-1)">Host interface</text>
+			<text x="34.9775" y="139.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,278) scale(1,-1)">8-bit input / output</text>
+			<rect x="180" y="187" width="145" height="52" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="198.81799999999998" y="218.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,436) scale(1,-1)">Streaming controller</text>
+			<text x="206.2265" y="201.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,402) scale(1,-1)">K counter / byte pairing</text>
+			<rect x="180" y="60" width="145" height="52" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="223.82" y="91.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,182) scale(1,-1)">Input skew</text>
+			<text x="210.983" y="74.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,148) scale(1,-1)">A row 1 / B column 1</text>
+			<path d="M 132,156 L 180,213 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="180 213, 174.5237 210.5485, 178.5162 207.1864" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<path d="M 250,187 L 250,112 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="250 112, 252.6098 117.4027, 247.3902 117.4027" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<rect x="390" y="178" width="90" height="52" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="418.656" y="209.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,418) scale(1,-1)">PE 00</text>
+			<text x="396.741" y="192.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,384) scale(1,-1)">INT4 MAC / sum12</text>
+			<rect x="535" y="178" width="90" height="52" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="563.656" y="209.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,418) scale(1,-1)">PE 01</text>
+			<text x="541.741" y="192.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,384) scale(1,-1)">INT4 MAC / sum12</text>
+			<rect x="390" y="65" width="90" height="52" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="418.656" y="96.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,192) scale(1,-1)">PE 10</text>
+			<text x="396.741" y="79.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,158) scale(1,-1)">INT4 MAC / sum12</text>
+			<rect x="535" y="65" width="90" height="52" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="563.656" y="96.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,192) scale(1,-1)">PE 11</text>
+			<text x="541.741" y="79.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,158) scale(1,-1)">INT4 MAC / sum12</text>
+			<path d="M 325,86 L 390,91 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="390 91, 384.4131 93.18774, 384.8134 87.98353" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<path d="M 350,203 L 390,203 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="390 203, 384.5973 205.6098, 384.5973 200.3902" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<path d="M 480,204 L 535,204 Z" style="stroke: rgb(15%,48%,44%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="535 204, 529.5973 206.6098, 529.5973 201.3902" style="stroke: rgb(15%,48%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(15%,48%,44%); fill-rule: evenodd;"/>
+			<path d="M 480,91 L 535,91 Z" style="stroke: rgb(15%,48%,44%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="535 91, 529.5973 93.60979, 529.5973 88.39021" style="stroke: rgb(15%,48%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(15%,48%,44%); fill-rule: evenodd;"/>
+			<path d="M 435,178 L 435,117 Z" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="435 117, 437.6098 122.4027, 432.3902 122.4027" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(13%,34%,47%); fill-rule: evenodd;"/>
+			<path d="M 580,178 L 580,117 Z" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="580 117, 582.6098 122.4027, 577.3902 122.4027" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(13%,34%,47%); fill-rule: evenodd;"/>
+			<text x="474.435" y="245" style="font-family: Helvetica; font-size: 10px;fill: rgb(15%,48%,44%); stroke:none;" transform="translate(0,490) scale(1,-1)">A moves right</text>
+			<text x="474.21" y="141" style="font-family: Helvetica; font-size: 10px;fill: rgb(13%,34%,47%); stroke:none;" transform="translate(0,282) scale(1,-1)">B moves down</text>
+			<text x="343.0" y="25" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,50) scale(1,-1)">Four 16-bit sign-extended results feed byte readback</text>
+		</g>
+	</g>
+</svg>

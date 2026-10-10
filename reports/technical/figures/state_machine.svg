@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="640" height="225" preserveAspectRatio="xMinYMin meet" viewBox="0 0 640 225" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="640" height="225"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-225)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="10" y="100" width="125" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="59.162" y="135.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,270) scale(1,-1)">IDLE</text>
+			<text x="35.9915" y="118.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,236) scale(1,-1)">waiting for START</text>
+			<rect x="175" y="100" width="125" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="221.162" y="135.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,270) scale(1,-1)">LOAD</text>
+			<text x="208.9835" y="118.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,236) scale(1,-1)">2K input bytes</text>
+			<rect x="340" y="100" width="125" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="383.834" y="135.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,270) scale(1,-1)">DRAIN</text>
+			<text x="364.727" y="118.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,236) scale(1,-1)">two enabled edges</text>
+			<rect x="505" y="100" width="125" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="550.1659999999999" y="135.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,270) scale(1,-1)">DONE</text>
+			<text x="533.4845" y="118.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,236) scale(1,-1)">eight result bytes</text>
+			<path d="M 135,130 L 175,130 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="175 130, 169.5973 132.6098, 169.5973 127.3902" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<text x="140.249" y="168" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,336) scale(1,-1)">START</text>
+			<path d="M 300,130 L 340,130 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="340 130, 334.5973 132.6098, 334.5973 127.3902" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<text x="308.7455" y="168" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,336) scale(1,-1)">last B</text>
+			<path d="M 465,130 L 505,130 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="505 130, 499.5973 132.6098, 499.5973 127.3902" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<text x="468.989" y="168" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,336) scale(1,-1)">2 edges</text>
+			<path d="M 565,100 L 565,55 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 565,55 L 238,55 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 238,55 L 238,100 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="238 100, 235.3902 94.59732, 240.6098 94.59732" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<text x="334.705" y="35" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,70) scale(1,-1)">accepted START from DONE</text>
+			<text x="178.7765" y="204" style="font-family: Helvetica; font-size: 11px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,408) scale(1,-1)">RESET or enabled ABORT from any state returns to IDLE</text>
+			<text x="173.955" y="8" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,16) scale(1,-1)">ena = 0 freezes state and datapath; NOP still allows pipeline drain</text>
+		</g>
+	</g>
+</svg>

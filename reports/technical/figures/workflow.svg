@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="640" height="245" preserveAspectRatio="xMinYMin meet" viewBox="0 0 640 245" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="640" height="245"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-245)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="10" y="153" width="170" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="53.983999999999995" y="188.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,376) scale(1,-1)">RTL and model</text>
+			<text x="54.86" y="171.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,342) scale(1,-1)">Git source + fixtures</text>
+			<rect x="235" y="153" width="170" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="261.98" y="188.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,376) scale(1,-1)">Functional verification</text>
+			<text x="275.486" y="171.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,342) scale(1,-1)">MAC / core / chip / ML</text>
+			<rect x="460" y="153" width="170" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="508.322" y="188.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,376) scale(1,-1)">Physical build</text>
+			<text x="497.7275" y="171.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,342) scale(1,-1)">synthesis / place / route</text>
+			<path d="M 180,183 L 235,183 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="235 183, 229.5973 185.6098, 229.5973 180.3902" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<path d="M 405,183 L 460,183 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="460 183, 454.5973 185.6098, 454.5973 180.3902" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<rect x="10" y="38" width="170" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="46.315999999999995" y="73.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,146) scale(1,-1)">Report and review</text>
+			<text x="33.9755" y="56.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,112) scale(1,-1)">metrics + issues + provenance</text>
+			<rect x="235" y="38" width="170" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="273.656" y="73.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,146) scale(1,-1)">Netlist regression</text>
+			<text x="272.7365" y="56.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,112) scale(1,-1)">same pin-level ML tests</text>
+			<rect x="460" y="38" width="170" height="60" rx="4" ry="4" style="stroke: rgb(13%,34%,47%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="502.322" y="73.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,146) scale(1,-1)">Physical checks</text>
+			<text x="488.48" y="56.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,112) scale(1,-1)">STA / DRC / LVS / precheck</text>
+			<path d="M 545,153 L 545,98 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="545 98, 547.6098 103.4027, 542.3902 103.4027" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<path d="M 460,68 L 405,68 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="405 68, 410.4027 65.39021, 410.4027 70.60979" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<path d="M 235,68 L 180,68 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1.5;"/>
+			<polygon points="180 68, 185.4027 65.39021, 185.4027 70.60979" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(39%,45%,54%); fill-rule: evenodd;"/>
+			<text x="145.20499999999998" y="8" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,16) scale(1,-1)">Passing workflow status and detailed electrical findings are reported separately</text>
+		</g>
+	</g>
+</svg>

@@ -8,7 +8,7 @@ All existing arithmetic/protocol tests pass, including the +1024 and −896 endp
 
 Baseline routed standard-cell area: 13,309 µm²; worst setup slack +5.062 ns, hold +0.114 ns. The official flow actually used a 20 ns clock constraint (50 MHz) despite info.yaml's intended 10 MHz operating frequency. Floorplan from the flow is 161 × 111.52 µm for one tile. Report clock constraints explicitly; do not infer maximum frequency from one slack number. Both baseline and candidate must use identical flow/constraints for comparison.
 
-Candidate f5fd8804b6859e741a871e7ea7580a31b0cb1a06, physical run 38081509655. All checks passed: GDS, precheck, gate-level simulation (including the full ML fixture), viewer, RTL regressions and docs. Physical workflow completed in 7m48s. The baseline already fits one tile, so an area reduction alone will not reduce the tile purchase price.
+Candidate f5fd8804b6859e741a871e7ea7580a31b0cb1a06, physical run 38081509655. All listed workflows passed: GDS, precheck, gate-level simulation (including the full ML fixture), viewer, RTL regressions and docs. Physical workflow completed in 7m48s. The baseline already fits one tile, so an area reduction alone will not reduce the tile purchase price.
 
 ## Routed comparison
 
@@ -29,3 +29,7 @@ Same SKY26d template/flow and 20 ns constraint; same one-tile floorplan.
 **Area reduction: 12.466%.** Setup margin improves by 1.192 ns at the same constraint. This is a routed tool result, not silicon frequency measurement. There is no demonstrated throughput or energy increase. Both designs' archived source passed the identical package-level arithmetic, protocol and 360-image inference regression locally. Every model tile matched the software reference for both designs.
 
 Source artifacts: GDS_logs/runs/wokwi/final/metrics.json and src/config_merged.json from the two recorded runs. Their compact summaries are stored in physical-baseline.json and physical-optimized.json. Generic Yosys counts fell from 1,284 to 1,148, but physical area is the relevant comparison above.
+
+## Detailed electrical audit
+
+The detailed report review found 183 maximum-transition violations at the worst slow corner (baseline: 299), plus one clock-buffer fanout violation. Workflow success is not complete electrical signoff. The N/A register-to-register setup summary and 17 unannotated drivers also need a coverage review. Resolve or obtain documented acceptance for these findings before final fabrication signoff. See the [technical report](technical/TinySystolic_Technical_Report.md), sections 13–14, and its preserved timing evidence.

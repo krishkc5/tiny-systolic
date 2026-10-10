@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="640" height="210" preserveAspectRatio="xMinYMin meet" viewBox="0 0 640 210" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="640" height="210"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-210)" style="clip-path: url(#clip)">
+		<g transform="">
+			<text x="27.018" y="156" style="font-family: Helvetica; font-size: 11px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,312) scale(1,-1)">PE 00</text>
+			<rect x="88" y="145" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="116.02" y="155" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,310) scale(1,-1)">k = 0</text>
+			<rect x="172" y="145" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="200.02" y="155" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,310) scale(1,-1)">k = 1</text>
+			<rect x="256" y="145" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="284.02" y="155" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,310) scale(1,-1)">k = 2</text>
+			<rect x="340" y="145" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="368.02" y="155" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,310) scale(1,-1)">k = 3</text>
+			<rect x="424" y="145" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="461.335" y="155" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,310) scale(1,-1)">-</text>
+			<rect x="508" y="145" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="545.335" y="155" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,310) scale(1,-1)">-</text>
+			<text x="27.018" y="121" style="font-family: Helvetica; font-size: 11px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,242) scale(1,-1)">PE 01</text>
+			<rect x="88" y="110" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="125.335" y="120" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,240) scale(1,-1)">-</text>
+			<rect x="172" y="110" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="200.02" y="120" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,240) scale(1,-1)">k = 0</text>
+			<rect x="256" y="110" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="284.02" y="120" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,240) scale(1,-1)">k = 1</text>
+			<rect x="340" y="110" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="368.02" y="120" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,240) scale(1,-1)">k = 2</text>
+			<rect x="424" y="110" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="452.02" y="120" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,240) scale(1,-1)">k = 3</text>
+			<rect x="508" y="110" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="545.335" y="120" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,240) scale(1,-1)">-</text>
+			<text x="27.018" y="86" style="font-family: Helvetica; font-size: 11px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,172) scale(1,-1)">PE 10</text>
+			<rect x="88" y="75" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="125.335" y="85" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,170) scale(1,-1)">-</text>
+			<rect x="172" y="75" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="200.02" y="85" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,170) scale(1,-1)">k = 0</text>
+			<rect x="256" y="75" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="284.02" y="85" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,170) scale(1,-1)">k = 1</text>
+			<rect x="340" y="75" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="368.02" y="85" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,170) scale(1,-1)">k = 2</text>
+			<rect x="424" y="75" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="452.02" y="85" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,170) scale(1,-1)">k = 3</text>
+			<rect x="508" y="75" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="545.335" y="85" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,170) scale(1,-1)">-</text>
+			<text x="27.018" y="51" style="font-family: Helvetica; font-size: 11px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,102) scale(1,-1)">PE 11</text>
+			<rect x="88" y="40" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="125.335" y="50" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,100) scale(1,-1)">-</text>
+			<rect x="172" y="40" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="209.335" y="50" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,100) scale(1,-1)">-</text>
+			<rect x="256" y="40" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="284.02" y="50" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,100) scale(1,-1)">k = 0</text>
+			<rect x="340" y="40" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="368.02" y="50" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,100) scale(1,-1)">k = 1</text>
+			<rect x="424" y="40" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="452.02" y="50" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,100) scale(1,-1)">k = 2</text>
+			<rect x="508" y="40" width="78" height="29" style="stroke: rgb(79%,83%,85%); stroke-linecap: butt; stroke-width: 1; fill: rgb(91%,94%,96%); fill-rule: evenodd;"/>
+			<text x="536.02" y="50" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,100) scale(1,-1)">k = 3</text>
+			<text x="111.155" y="188" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,376) scale(1,-1)">Edge 1</text>
+			<text x="195.155" y="188" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,376) scale(1,-1)">Edge 2</text>
+			<text x="279.155" y="188" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,376) scale(1,-1)">Edge 3</text>
+			<text x="363.155" y="188" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,376) scale(1,-1)">Edge 4</text>
+			<text x="447.155" y="188" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,376) scale(1,-1)">Edge 5</text>
+			<text x="531.155" y="188" style="font-family: Helvetica; font-size: 10px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,376) scale(1,-1)">Edge 6</text>
+			<text x="155.077" y="9" style="font-family: Helvetica; font-size: 11px;fill: rgb(9%,17%,22%); stroke:none;" transform="translate(0,18) scale(1,-1)">Full-rate core schedule: K + 2 enabled edges including first injection</text>
+		</g>
+	</g>
+</svg>

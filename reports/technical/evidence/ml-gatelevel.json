@@ -1,0 +1,12 @@
+{
+  "test_images": 360,
+  "correct": 327,
+  "accuracy": 0.9083333333333333,
+  "rtl_predictions_match_integer_model": true,
+  "tile_transactions": 6660,
+  "mismatched_tiles": 0,
+  "protocol_cycles": 286380,
+  "cycles_per_two_image_batch": 1591.0,
+  "host": "bias, rescaling, ReLU, requantization, tile partial-sum combination, argmax",
+  "measurement": "gatelevel simulation; ideal synchronous host; excludes host processing and transport latency"
+}

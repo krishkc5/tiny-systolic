@@ -1,0 +1,17 @@
+{
+  "dataset": "sklearn 8x8 handwritten digits",
+  "train_samples": 1437,
+  "test_samples": 360,
+  "architecture": [
+    64,
+    16,
+    10
+  ],
+  "float_correct": 344,
+  "int4_correct": 327,
+  "float_accuracy": 0.9555555555555556,
+  "int4_accuracy": 0.9083333333333333,
+  "training_iterations": 157,
+  "quantization": "symmetric per-output-channel weights; unsigned 0..7 activations in signed INT4; float host scaling/bias/ReLU",
+  "test_split": "stratified 20%, random_state=42; no test-based calibration"
+}
