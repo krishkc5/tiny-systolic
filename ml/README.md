@@ -1,0 +1,3 @@
+# Handwritten-digit demo roadmap
+
+Proposed model: 64 -> 16 -> 10, trained on scikit-learn 8x8 digits with a fixed, stratified train/test split. Fit all preprocessing and quantization scales on training/calibration data only. Compare float accuracy to a custom signed-INT4 integer reference before hardware testing. Training, bias, activation, requantization, and wide partial-sum combination run on the host initially. Tile reductions into K<=16 chunks; accumulate chunk results in a wider host integer. Send the same tiles through RTL and compare every output exactly. Batch two images to exercise both array rows. Accuracy and performance have not been measured. Training and hardware driver are not implemented.

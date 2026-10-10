@@ -1,20 +1,12 @@
-<!---
+# How it works
 
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
+Scaffold status: single signed INT4 multiply-accumulate unit with INT16 result.
+The planned 2x2 systolic array is not implemented. Do not submit this scaffold as the finished accelerator.
 
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
+# How to test
 
-## How it works
+Run `make check`. Hold rst_n low across a rising clock edge. A is ui_in[3:0], B is ui_in[7:4], both signed. uio_in[0] clears, uio_in[1] enables accumulation when ena is high, uio_in[2] chooses high result byte (otherwise low). Clear takes priority. The accumulator wraps at 16 bits if used beyond its planned bounded workload. All bidirectional pins are inputs. Drive inputs synchronously. Read results only while accumulation is stopped for a coherent two-byte read.
 
-Explain how your project works
+# External hardware
 
-## How to test
-
-Explain how to use your project
-
-## External hardware
-
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+None for simulation. Future silicon demo will need the matching Tiny Tapeout board and a host interface.

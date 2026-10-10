@@ -1,42 +1,42 @@
-![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
+# TinySystolic
 
-# Tiny Tapeout Verilog Project Template
+An INT4 systolic-array ML accelerator for Tiny Tapeout.
 
-- [Read the documentation for project](docs/info.md)
+**Status: runnable scaffold.** The signed multiply-accumulate building block and bring-up wrapper are implemented. The four-PE array, controller, trained ML demo, physical implementation, and performance measurements are still pending.
 
-## What is Tiny Tapeout?
+## Quick start
 
-Tiny Tapeout is an educational project that aims to make it easier and cheaper than ever to get your digital and analog designs manufactured on a real chip.
+Requirements: Python 3, Verilator, make, and a C++ compiler. Yosys is optional.
 
-To learn more and get started, visit https://tinytapeout.com.
+```sh
+make check   # RTL lint, exhaustive MAC test, integer-reference tests
+make synth   # generic synthesis only; not physical area/timing
+```
 
-## Set up your Verilog project
+## Project map
 
-1. Add your Verilog files to the `src` folder.
-2. Edit the [info.yaml](info.yaml) and update information about your project, paying special attention to the `source_files` and `top_module` properties. If you are upgrading an existing Tiny Tapeout project, check out our [online info.yaml migration tool](https://tinytapeout.github.io/tt-yaml-upgrade-tool/).
-3. Edit [docs/info.md](docs/info.md) and add a description of your project.
-4. Adapt the testbench to your design. See [test/README.md](test/README.md) for more information.
+- `src/`: synthesizable MAC and Tiny Tapeout bring-up wrapper
+- `test/`: executable hardware and Python tests
+- `model/`: signed INT4 matrix reference
+- `benchmarks/`: metric contract and empty results schema
+- `ml/`: digit-classifier integration plan
+- `docs/architecture.md`: planned accelerator and verification milestones
+- `docs/info.md`: implemented bring-up interface
+- `docs/tiny-tapeout.md`: dated pricing and area research
+- `docs/template-provenance.md`: official template version and migration steps
+- `reports/`: generated synthesis and future physical reports
+- `scripts/`: future host tooling
 
-The GitHub action will automatically build the ASIC files using [LibreLane](https://www.zerotoasiccourse.com/terminology/librelane/).
+## Next milestones
 
-## Enable GitHub actions to build the results page
+1. Add operand forwarding, valid propagation, and a tested 2x2 array.
+2. Define and verify the streaming byte interface and controller.
+3. Implement equivalent sequential baseline and reproducible cycle benchmarks.
+4. Train and quantize the digit model; verify inference through RTL.
+5. Run the SKY26d physical flow on the completed accelerator to determine tile fit.
 
-- [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
+The repository uses the official SKY130 template with SKY26d workflows. `info.yaml` requests one tile at a 10 MHz target for bring-up only; neither is a full-accelerator result. GitHub workflows build the current single-MAC scaffold; no fabrication purchase or submission has been made.
 
-## Resources
+## GitHub builds
 
-- [FAQ](https://tinytapeout.com/faq/)
-- [Digital design lessons](https://tinytapeout.com/digital_design/)
-- [Learn how semiconductors work](https://tinytapeout.com/siliwiz/)
-- [Join the community](https://tinytapeout.com/discord)
-- [Build your design locally](https://www.tinytapeout.com/guides/local-hardening/)
-
-## What next?
-
-- [Submit your design to the next shuttle](https://app.tinytapeout.com/).
-- Edit [this README](README.md) and explain your design, how it works, and how to test it.
-- Share your project on your social network of choice:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
-  - Bluesky [@tinytapeout.com](https://bsky.app/profile/tinytapeout.com)
+The official SKY26d workflows run RTL simulation, layout generation, precheck, gate-level simulation, documentation, and the layout viewer. The separate verification workflow runs our Verilator and integer-model tests. `test/test.py` exercises the external interface in both RTL and gate-level simulation. Physical results initially describe only the single-MAC scaffold.
