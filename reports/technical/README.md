@@ -24,3 +24,7 @@ RTL and functional gate-level regressions pass, with all 6,660 ML tiles matching
 ## Report generation and validation
 
 The report uses Python with python-docx and reportlab; SVG rasterization uses Node and sharp. Generation order: `analysis/make_figures.py`, `analysis/rasterize.cjs`, then `analysis/build_report.py`. The fixed fixture and evidence inputs must remain available. The DOCX was rendered and every page visually reviewed; numerical tables retain original evidence alongside rounded display values. No RTL was modified for this report.
+
+## LaTeX edition
+
+[LaTeX source](TinySystolic_Technical_Report.tex) and [compilation instructions](LATEX_README.md). The local deliverables/TinySystolic_LaTeX.zip includes all companion figures for Overleaf. The standalone desktop preview compiles with labelled image placeholders because companion files are unsupported. The original SHA256SUMS and evidence ZIP document the earlier Word-report snapshot; these LaTeX additions do not alter it.
