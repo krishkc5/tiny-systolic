@@ -1,6 +1,6 @@
 # TinySystolic streaming protocol (v1)
 
-Compute C[2,2] = A[2,K] × B[K,2], signed INT4 operands and signed INT16 results, K=1..16. No saturation or quantization is performed. All supported sums fit; maximum positive result is 1024. Host software combines larger reductions and applies bias, activation and requantization.
+Compute C[2,2] = A[2,K] × B[K,2], signed INT4 operands and signed INT16 results, K=1..16. Internally each PE uses a signed 12-bit sum and sign-extends to 16 bits. Every prefix of up to 16 products is bounded by −896..1024, so there is no precision loss. No saturation or quantization is performed. All supported sums fit; maximum positive result is 1024. Host software combines larger reductions and applies bias, activation and requantization.
 
 ## Pins
 

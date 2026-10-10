@@ -19,3 +19,9 @@ synth:
 chip-test:
 	cd test && $(MAKE)
 	$(PYTHON) -m cocotb_tools.check_results test/results.xml
+
+ml-train:
+	$(PYTHON) ml/train.py
+ml-test:
+	cd test && $(MAKE) COCOTB_TEST_MODULES=test_ml
+	$(PYTHON) -m cocotb_tools.check_results test/results.xml

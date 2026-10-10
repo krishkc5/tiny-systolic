@@ -9,12 +9,12 @@ Design, verify, and physically implement a small matrix-multiplication accelerat
 ## Implemented architecture
 
 - Four processing elements in a 2 × 2 output-stationary systolic array.
-- Signed INT4 operands (−8 through 7), signed 16-bit accumulators.
+- Signed INT4 operands (−8 through 7), signed 12-bit internal accumulators, sign-extended to 16-bit results.
 - Compute C[2,2] = A[2,K] × B[K,2], with K from 1 through 16 initially.
 - A moves right, B moves down; every element keeps its own partial sum.
 - Inputs enter the top and left edges with row/column skew. Valid bits travel with operands; bubbles must never accumulate stale values.
 - Accumulators clear at the start of each operation. Outputs remain stable until explicitly cleared or overwritten by the next operation.
-- The maximum positive sum for K ≤ 16 is 16 × 64 = 1024, safely within signed 16-bit range.
+- The maximum positive sum for K ≤ 16 is 16 × 64 = 1024 and the minimum is 16 × (−56) = −896. Signed 12-bit storage is sufficient; 11 bits is not (maximum +1023).
 - Larger matrices use software tiling; software combines partial results when splitting the reduction dimension.
 
 ## Interface and bandwidth decision

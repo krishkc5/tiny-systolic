@@ -37,13 +37,25 @@ Top module:  \tt_um_krishkc5_tinysystolic
 Used module:     \systolic_array
 Used module:         \systolic_pe
 Used module:             \mac_pe
+Parameter \ACC_W = 12
 
-5.1.2. Analyzing design hierarchy..
+5.1.2. Executing AST frontend in derive mode using pre-parsed AST for module `\mac_pe'.
+Parameter \ACC_W = 12
+Generating RTLIL representation for module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+
+5.1.3. Analyzing design hierarchy..
 Top module:  \tt_um_krishkc5_tinysystolic
 Used module:     \systolic_array
 Used module:         \systolic_pe
-Used module:             \mac_pe
-Removed 0 unused modules.
+Used module:             $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100
+
+5.1.4. Analyzing design hierarchy..
+Top module:  \tt_um_krishkc5_tinysystolic
+Used module:     \systolic_array
+Used module:         \systolic_pe
+Used module:             $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100
+Removing unused module `\mac_pe'.
+Removed 1 unused modules.
 
 5.2. Executing PROC pass (convert processes to netlists).
 
@@ -54,8 +66,8 @@ Cleaned up 0 empty switches.
 Marked 1 switch rules as full_case in process $proc$src/project.v:68$39 in module tt_um_krishkc5_tinysystolic.
 Marked 8 switch rules as full_case in process $proc$src/project.v:26$30 in module tt_um_krishkc5_tinysystolic.
 Marked 1 switch rules as full_case in process $proc$src/systolic_array.v:11$11 in module systolic_array.
-Marked 1 switch rules as full_case in process $proc$src/systolic_pe.v:13$8 in module systolic_pe.
-Marked 1 switch rules as full_case in process $proc$src/mac_pe.v:9$2 in module mac_pe.
+Marked 1 switch rules as full_case in process $proc$src/systolic_pe.v:16$8 in module systolic_pe.
+Marked 1 switch rules as full_case in process $proc$src/mac_pe.v:9$51 in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 Removed a total of 0 dead cases.
 
 5.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
@@ -85,48 +97,48 @@ Creating decoders for process `\systolic_array.$proc$src/systolic_array.v:11$11'
      1/3: $0\skew_valid[0:0]
      2/3: $0\b1_skew[3:0]
      3/3: $0\a1_skew[3:0]
-Creating decoders for process `\systolic_pe.$proc$src/systolic_pe.v:13$8'.
+Creating decoders for process `\systolic_pe.$proc$src/systolic_pe.v:16$8'.
      1/4: $0\bv_out[0:0]
      2/4: $0\av_out[0:0]
      3/4: $0\b_out[3:0]
      4/4: $0\a_out[3:0]
-Creating decoders for process `\mac_pe.$proc$src/mac_pe.v:9$2'.
-     1/1: $0\acc[15:0]
+Creating decoders for process `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.$proc$src/mac_pe.v:9$51'.
+     1/1: $0\acc[11:0]
 
 5.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
 No latch inferred for signal `\tt_um_krishkc5_tinysystolic.\selected' from process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:68$39'.
 
 5.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
 Creating register for signal `\tt_um_krishkc5_tinysystolic.\state' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
-  created $dff cell `$procdff$247' with positive edge clock.
-Creating register for signal `\tt_um_krishkc5_tinysystolic.\remaining' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
-  created $dff cell `$procdff$248' with positive edge clock.
-Creating register for signal `\tt_um_krishkc5_tinysystolic.\half' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
-  created $dff cell `$procdff$249' with positive edge clock.
-Creating register for signal `\tt_um_krishkc5_tinysystolic.\drain_last' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
-  created $dff cell `$procdff$250' with positive edge clock.
-Creating register for signal `\tt_um_krishkc5_tinysystolic.\error' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
-  created $dff cell `$procdff$251' with positive edge clock.
-Creating register for signal `\tt_um_krishkc5_tinysystolic.\a_pair' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
   created $dff cell `$procdff$252' with positive edge clock.
-Creating register for signal `\tt_um_krishkc5_tinysystolic.\read_index' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
+Creating register for signal `\tt_um_krishkc5_tinysystolic.\remaining' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
   created $dff cell `$procdff$253' with positive edge clock.
-Creating register for signal `\systolic_array.\a1_skew' using process `\systolic_array.$proc$src/systolic_array.v:11$11'.
+Creating register for signal `\tt_um_krishkc5_tinysystolic.\half' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
   created $dff cell `$procdff$254' with positive edge clock.
-Creating register for signal `\systolic_array.\b1_skew' using process `\systolic_array.$proc$src/systolic_array.v:11$11'.
+Creating register for signal `\tt_um_krishkc5_tinysystolic.\drain_last' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
   created $dff cell `$procdff$255' with positive edge clock.
-Creating register for signal `\systolic_array.\skew_valid' using process `\systolic_array.$proc$src/systolic_array.v:11$11'.
+Creating register for signal `\tt_um_krishkc5_tinysystolic.\error' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
   created $dff cell `$procdff$256' with positive edge clock.
-Creating register for signal `\systolic_pe.\a_out' using process `\systolic_pe.$proc$src/systolic_pe.v:13$8'.
+Creating register for signal `\tt_um_krishkc5_tinysystolic.\a_pair' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
   created $dff cell `$procdff$257' with positive edge clock.
-Creating register for signal `\systolic_pe.\b_out' using process `\systolic_pe.$proc$src/systolic_pe.v:13$8'.
+Creating register for signal `\tt_um_krishkc5_tinysystolic.\read_index' using process `\tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
   created $dff cell `$procdff$258' with positive edge clock.
-Creating register for signal `\systolic_pe.\av_out' using process `\systolic_pe.$proc$src/systolic_pe.v:13$8'.
+Creating register for signal `\systolic_array.\a1_skew' using process `\systolic_array.$proc$src/systolic_array.v:11$11'.
   created $dff cell `$procdff$259' with positive edge clock.
-Creating register for signal `\systolic_pe.\bv_out' using process `\systolic_pe.$proc$src/systolic_pe.v:13$8'.
+Creating register for signal `\systolic_array.\b1_skew' using process `\systolic_array.$proc$src/systolic_array.v:11$11'.
   created $dff cell `$procdff$260' with positive edge clock.
-Creating register for signal `\mac_pe.\acc' using process `\mac_pe.$proc$src/mac_pe.v:9$2'.
+Creating register for signal `\systolic_array.\skew_valid' using process `\systolic_array.$proc$src/systolic_array.v:11$11'.
   created $dff cell `$procdff$261' with positive edge clock.
+Creating register for signal `\systolic_pe.\a_out' using process `\systolic_pe.$proc$src/systolic_pe.v:16$8'.
+  created $dff cell `$procdff$262' with positive edge clock.
+Creating register for signal `\systolic_pe.\b_out' using process `\systolic_pe.$proc$src/systolic_pe.v:16$8'.
+  created $dff cell `$procdff$263' with positive edge clock.
+Creating register for signal `\systolic_pe.\av_out' using process `\systolic_pe.$proc$src/systolic_pe.v:16$8'.
+  created $dff cell `$procdff$264' with positive edge clock.
+Creating register for signal `\systolic_pe.\bv_out' using process `\systolic_pe.$proc$src/systolic_pe.v:16$8'.
+  created $dff cell `$procdff$265' with positive edge clock.
+Creating register for signal `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.\acc' using process `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.$proc$src/mac_pe.v:9$51'.
+  created $dff cell `$procdff$266' with positive edge clock.
 
 5.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
 
@@ -137,10 +149,10 @@ Found and cleaned up 10 empty switches in `\tt_um_krishkc5_tinysystolic.$proc$sr
 Removing empty process `tt_um_krishkc5_tinysystolic.$proc$src/project.v:26$30'.
 Found and cleaned up 2 empty switches in `\systolic_array.$proc$src/systolic_array.v:11$11'.
 Removing empty process `systolic_array.$proc$src/systolic_array.v:11$11'.
-Found and cleaned up 2 empty switches in `\systolic_pe.$proc$src/systolic_pe.v:13$8'.
-Removing empty process `systolic_pe.$proc$src/systolic_pe.v:13$8'.
-Found and cleaned up 2 empty switches in `\mac_pe.$proc$src/mac_pe.v:9$2'.
-Removing empty process `mac_pe.$proc$src/mac_pe.v:9$2'.
+Found and cleaned up 2 empty switches in `\systolic_pe.$proc$src/systolic_pe.v:16$8'.
+Removing empty process `systolic_pe.$proc$src/systolic_pe.v:16$8'.
+Found and cleaned up 2 empty switches in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.$proc$src/mac_pe.v:9$51'.
+Removing empty process `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.$proc$src/mac_pe.v:9$51'.
 Cleaned up 17 empty switches.
 
 5.2.12. Executing OPT_EXPR pass (perform const folding).
@@ -149,19 +161,19 @@ Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 <suppressed ~1 debug messages>
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.3. Executing OPT_EXPR pass (perform const folding).
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.4. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 Removed 2 unused cells and 86 unused wires.
 <suppressed ~6 debug messages>
 
@@ -169,7 +181,7 @@ Removed 2 unused cells and 86 unused wires.
 Checking module tt_um_krishkc5_tinysystolic...
 Checking module systolic_array...
 Checking module systolic_pe...
-Checking module mac_pe...
+Checking module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100...
 Found and reported 0 problems.
 
 5.6. Executing OPT pass (performing simple optimizations).
@@ -178,7 +190,7 @@ Found and reported 0 problems.
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.6.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\tt_um_krishkc5_tinysystolic'.
@@ -195,16 +207,16 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 17 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 7 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 7 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 28 cells.
 
 5.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
 Running muxtree optimizer on module \tt_um_krishkc5_tinysystolic..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
-      Replacing known input bits on port B of cell $procmux$109: \drain_last -> 1'1
+      Replacing known input bits on port B of cell $procmux$114: \drain_last -> 1'1
   Analyzing evaluation results.
 Running muxtree optimizer on module \systolic_array..
   Creating internal representation of mux trees.
@@ -214,7 +226,7 @@ Running muxtree optimizer on module \systolic_pe..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
-Running muxtree optimizer on module \mac_pe..
+Running muxtree optimizer on module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
@@ -226,7 +238,7 @@ Removed 0 multiplexer ports.
   Optimizing cells in module \tt_um_krishkc5_tinysystolic.
   Optimizing cells in module \systolic_array.
   Optimizing cells in module \systolic_pe.
-  Optimizing cells in module \mac_pe.
+  Optimizing cells in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 Performed a total of 1 changes.
 
 5.6.5. Executing OPT_MERGE pass (detect identical cells).
@@ -239,9 +251,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 17 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 7 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 7 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.6.6. Executing OPT_DFF pass (perform DFF optimizations).
@@ -250,7 +262,7 @@ Removed a total of 0 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 Removed 0 unused cells and 29 unused wires.
 <suppressed ~1 debug messages>
 
@@ -258,7 +270,7 @@ Removed 0 unused cells and 29 unused wires.
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.6.9. Rerunning OPT passes. (Maybe there is more to do..)
 
@@ -275,7 +287,7 @@ Running muxtree optimizer on module \systolic_pe..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
-Running muxtree optimizer on module \mac_pe..
+Running muxtree optimizer on module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
@@ -286,7 +298,7 @@ Removed 0 multiplexer ports.
   Optimizing cells in module \tt_um_krishkc5_tinysystolic.
   Optimizing cells in module \systolic_array.
   Optimizing cells in module \systolic_pe.
-  Optimizing cells in module \mac_pe.
+  Optimizing cells in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 Performed a total of 0 changes.
 
 5.6.12. Executing OPT_MERGE pass (detect identical cells).
@@ -299,9 +311,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 17 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 7 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 7 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.6.13. Executing OPT_DFF pass (perform DFF optimizations).
@@ -310,13 +322,13 @@ Removed a total of 0 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 
 5.6.15. Executing OPT_EXPR pass (perform const folding).
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.6.16. Finished fast OPT passes. (There is nothing left to do.)
 
@@ -327,7 +339,7 @@ Found FSM state register tt_um_krishkc5_tinysystolic.state.
 
 5.7.2. Executing FSM_EXTRACT pass (extracting FSM from design).
 Extracting FSM `\state' from module `\tt_um_krishkc5_tinysystolic'.
-  found $dff cell for state register: $procdff$247
+  found $dff cell for state register: $procdff$252
   root of input selection tree: $0\state[1:0]
   found reset state: 2'00 (guessed from mux tree)
   found ctrl input: \rst_n
@@ -386,7 +398,7 @@ Extracting FSM `\state' from module `\tt_um_krishkc5_tinysystolic'.
   transition:       2'11 9'-1-----11 ->       2'11 6'011001
 
 5.7.3. Executing FSM_OPT pass (simple optimizations of FSMs).
-Optimizing FSM `$fsm$\state$262' from module `\tt_um_krishkc5_tinysystolic'.
+Optimizing FSM `$fsm$\state$267' from module `\tt_um_krishkc5_tinysystolic'.
   Merging pattern 9'---10--11 and 9'---11--11 from group (2 2 6'001100).
   Merging pattern 9'---11--11 and 9'---10--11 from group (2 2 6'001100).
 
@@ -394,17 +406,17 @@ Optimizing FSM `$fsm$\state$262' from module `\tt_um_krishkc5_tinysystolic'.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 Removed 14 unused cells and 14 unused wires.
 <suppressed ~15 debug messages>
 
 5.7.5. Executing FSM_OPT pass (simple optimizations of FSMs).
-Optimizing FSM `$fsm$\state$262' from module `\tt_um_krishkc5_tinysystolic'.
+Optimizing FSM `$fsm$\state$267' from module `\tt_um_krishkc5_tinysystolic'.
   Removing unused output signal $0\state[1:0] [0].
   Removing unused output signal $0\state[1:0] [1].
 
 5.7.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
-Recoding FSM `$fsm$\state$262' from module `\tt_um_krishkc5_tinysystolic' using `auto' encoding:
+Recoding FSM `$fsm$\state$267' from module `\tt_um_krishkc5_tinysystolic' using `auto' encoding:
   mapping auto encoding to `one-hot` for this FSM.
   00 -> ---1
   10 -> --1-
@@ -413,10 +425,10 @@ Recoding FSM `$fsm$\state$262' from module `\tt_um_krishkc5_tinysystolic' using 
 
 5.7.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
 
-FSM `$fsm$\state$262' from module `tt_um_krishkc5_tinysystolic':
+FSM `$fsm$\state$267' from module `tt_um_krishkc5_tinysystolic':
 -------------------------------------
 
-  Information on FSM $fsm$\state$262 (\state):
+  Information on FSM $fsm$\state$267 (\state):
 
   Number of input signals:    9
   Number of output signals:   4
@@ -482,7 +494,7 @@ FSM `$fsm$\state$262' from module `tt_um_krishkc5_tinysystolic':
 -------------------------------------
 
 5.7.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
-Mapping FSM `$fsm$\state$262' from module `\tt_um_krishkc5_tinysystolic'.
+Mapping FSM `$fsm$\state$267' from module `\tt_um_krishkc5_tinysystolic'.
 
 5.8. Executing OPT pass (performing simple optimizations).
 
@@ -491,7 +503,7 @@ Optimizing module tt_um_krishkc5_tinysystolic.
 <suppressed ~1 debug messages>
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.8.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\tt_um_krishkc5_tinysystolic'.
@@ -506,9 +518,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 17 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 7 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 7 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 7 cells.
 
 5.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
@@ -524,7 +536,7 @@ Running muxtree optimizer on module \systolic_pe..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
-Running muxtree optimizer on module \mac_pe..
+Running muxtree optimizer on module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
@@ -535,7 +547,7 @@ Removed 0 multiplexer ports.
   Optimizing cells in module \tt_um_krishkc5_tinysystolic.
   Optimizing cells in module \systolic_array.
   Optimizing cells in module \systolic_pe.
-  Optimizing cells in module \mac_pe.
+  Optimizing cells in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 Performed a total of 0 changes.
 
 5.8.5. Executing OPT_MERGE pass (detect identical cells).
@@ -548,46 +560,46 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 17 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 7 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 7 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.8.6. Executing OPT_DFF pass (perform DFF optimizations).
-Adding SRST signal on $procdff$248 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$174_Y, Q = \remaining, rval = 4'0000).
-Adding EN signal on $auto$ff.cc:337:slice$366 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$167_Y, Q = \remaining).
-Adding SRST signal on $procdff$252 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$82_Y, Q = \a_pair, rval = 8'00000000).
-Adding EN signal on $auto$ff.cc:337:slice$380 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$79_Y, Q = \a_pair).
-Adding SRST signal on $procdff$251 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$103_Y, Q = \error, rval = 1'0).
-Adding EN signal on $auto$ff.cc:337:slice$390 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$91_Y, Q = \error).
-Adding SRST signal on $procdff$249 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$151_Y, Q = \half, rval = 1'0).
-Adding EN signal on $auto$ff.cc:337:slice$400 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$144_Y, Q = \half).
-Adding SRST signal on $procdff$250 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$131_Y, Q = \drain_last, rval = 1'0).
-Adding EN signal on $auto$ff.cc:337:slice$410 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$124_Y, Q = \drain_last).
-Adding SRST signal on $procdff$253 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$66_Y, Q = \read_index, rval = 3'000).
-Adding EN signal on $auto$ff.cc:337:slice$412 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$59_Y, Q = \read_index).
-Adding SRST signal on $procdff$256 ($dff) from module systolic_array (D = $procmux$207_Y, Q = \skew_valid, rval = 1'0).
-Adding EN signal on $auto$ff.cc:337:slice$422 ($sdff) from module systolic_array (D = \valid, Q = \skew_valid).
-Adding SRST signal on $procdff$254 ($dff) from module systolic_array (D = $procmux$217_Y, Q = \a1_skew, rval = 4'0000).
-Adding EN signal on $auto$ff.cc:337:slice$424 ($sdff) from module systolic_array (D = \a1, Q = \a1_skew).
-Adding SRST signal on $procdff$255 ($dff) from module systolic_array (D = $procmux$212_Y, Q = \b1_skew, rval = 4'0000).
-Adding EN signal on $auto$ff.cc:337:slice$426 ($sdff) from module systolic_array (D = \b1, Q = \b1_skew).
-Adding SRST signal on $procdff$257 ($dff) from module systolic_pe (D = $procmux$237_Y, Q = \a_out, rval = 4'0000).
-Adding EN signal on $auto$ff.cc:337:slice$428 ($sdff) from module systolic_pe (D = \a_in, Q = \a_out).
-Adding SRST signal on $procdff$258 ($dff) from module systolic_pe (D = $procmux$232_Y, Q = \b_out, rval = 4'0000).
-Adding EN signal on $auto$ff.cc:337:slice$430 ($sdff) from module systolic_pe (D = \b_in, Q = \b_out).
-Adding SRST signal on $procdff$259 ($dff) from module systolic_pe (D = $procmux$227_Y, Q = \av_out, rval = 1'0).
-Adding EN signal on $auto$ff.cc:337:slice$432 ($sdff) from module systolic_pe (D = \av_in, Q = \av_out).
-Adding SRST signal on $procdff$260 ($dff) from module systolic_pe (D = $procmux$222_Y, Q = \bv_out, rval = 1'0).
-Adding EN signal on $auto$ff.cc:337:slice$434 ($sdff) from module systolic_pe (D = \bv_in, Q = \bv_out).
-Adding SRST signal on $procdff$261 ($dff) from module mac_pe (D = $procmux$242_Y, Q = \acc, rval = 16'0000000000000000).
-Adding EN signal on $auto$ff.cc:337:slice$436 ($sdff) from module mac_pe (D = $add$src/mac_pe.v:11$5_Y, Q = \acc).
+Adding SRST signal on $procdff$253 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$179_Y, Q = \remaining, rval = 4'0000).
+Adding EN signal on $auto$ff.cc:337:slice$371 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$172_Y, Q = \remaining).
+Adding SRST signal on $procdff$257 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$87_Y, Q = \a_pair, rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:337:slice$385 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$84_Y, Q = \a_pair).
+Adding SRST signal on $procdff$256 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$108_Y, Q = \error, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$395 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$96_Y, Q = \error).
+Adding SRST signal on $procdff$254 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$156_Y, Q = \half, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$405 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$149_Y, Q = \half).
+Adding SRST signal on $procdff$255 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$136_Y, Q = \drain_last, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$415 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$129_Y, Q = \drain_last).
+Adding SRST signal on $procdff$258 ($dff) from module tt_um_krishkc5_tinysystolic (D = $procmux$71_Y, Q = \read_index, rval = 3'000).
+Adding EN signal on $auto$ff.cc:337:slice$417 ($sdff) from module tt_um_krishkc5_tinysystolic (D = $procmux$64_Y, Q = \read_index).
+Adding SRST signal on $procdff$261 ($dff) from module systolic_array (D = $procmux$212_Y, Q = \skew_valid, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$427 ($sdff) from module systolic_array (D = \valid, Q = \skew_valid).
+Adding SRST signal on $procdff$259 ($dff) from module systolic_array (D = $procmux$222_Y, Q = \a1_skew, rval = 4'0000).
+Adding EN signal on $auto$ff.cc:337:slice$429 ($sdff) from module systolic_array (D = \a1, Q = \a1_skew).
+Adding SRST signal on $procdff$260 ($dff) from module systolic_array (D = $procmux$217_Y, Q = \b1_skew, rval = 4'0000).
+Adding EN signal on $auto$ff.cc:337:slice$431 ($sdff) from module systolic_array (D = \b1, Q = \b1_skew).
+Adding SRST signal on $procdff$262 ($dff) from module systolic_pe (D = $procmux$242_Y, Q = \a_out, rval = 4'0000).
+Adding EN signal on $auto$ff.cc:337:slice$433 ($sdff) from module systolic_pe (D = \a_in, Q = \a_out).
+Adding SRST signal on $procdff$263 ($dff) from module systolic_pe (D = $procmux$237_Y, Q = \b_out, rval = 4'0000).
+Adding EN signal on $auto$ff.cc:337:slice$435 ($sdff) from module systolic_pe (D = \b_in, Q = \b_out).
+Adding SRST signal on $procdff$264 ($dff) from module systolic_pe (D = $procmux$232_Y, Q = \av_out, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$437 ($sdff) from module systolic_pe (D = \av_in, Q = \av_out).
+Adding SRST signal on $procdff$265 ($dff) from module systolic_pe (D = $procmux$227_Y, Q = \bv_out, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$439 ($sdff) from module systolic_pe (D = \bv_in, Q = \bv_out).
+Adding SRST signal on $procdff$266 ($dff) from module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100 (D = $procmux$247_Y, Q = \acc, rval = 12'000000000000).
+Adding EN signal on $auto$ff.cc:337:slice$441 ($sdff) from module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100 (D = $add$src/mac_pe.v:11$54_Y, Q = \acc).
 
 5.8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 Removed 28 unused cells and 41 unused wires.
 <suppressed ~32 debug messages>
 
@@ -596,7 +608,7 @@ Optimizing module tt_um_krishkc5_tinysystolic.
 <suppressed ~5 debug messages>
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.8.9. Rerunning OPT passes. (Maybe there is more to do..)
 
@@ -611,7 +623,7 @@ Running muxtree optimizer on module \systolic_array..
 Running muxtree optimizer on module \systolic_pe..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module \mac_pe..
+Running muxtree optimizer on module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Removed 0 multiplexer ports.
@@ -621,7 +633,7 @@ Removed 0 multiplexer ports.
   Optimizing cells in module \tt_um_krishkc5_tinysystolic.
   Optimizing cells in module \systolic_array.
   Optimizing cells in module \systolic_pe.
-  Optimizing cells in module \mac_pe.
+  Optimizing cells in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 Performed a total of 0 changes.
 
 5.8.12. Executing OPT_MERGE pass (detect identical cells).
@@ -637,9 +649,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 9 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 5 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 5 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 5 cells.
 
 5.8.13. Executing OPT_DFF pass (perform DFF optimizations).
@@ -648,7 +660,7 @@ Removed a total of 5 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 Removed 0 unused cells and 5 unused wires.
 <suppressed ~1 debug messages>
 
@@ -656,7 +668,7 @@ Removed 0 unused cells and 5 unused wires.
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.8.16. Rerunning OPT passes. (Maybe there is more to do..)
 
@@ -671,7 +683,7 @@ Running muxtree optimizer on module \systolic_array..
 Running muxtree optimizer on module \systolic_pe..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module \mac_pe..
+Running muxtree optimizer on module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Removed 0 multiplexer ports.
@@ -681,7 +693,7 @@ Removed 0 multiplexer ports.
   Optimizing cells in module \tt_um_krishkc5_tinysystolic.
   Optimizing cells in module \systolic_array.
   Optimizing cells in module \systolic_pe.
-  Optimizing cells in module \mac_pe.
+  Optimizing cells in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 Performed a total of 0 changes.
 
 5.8.19. Executing OPT_MERGE pass (detect identical cells).
@@ -694,9 +706,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 9 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 5 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 5 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.8.20. Executing OPT_DFF pass (perform DFF optimizations).
@@ -705,26 +717,26 @@ Removed a total of 0 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 
 5.8.22. Executing OPT_EXPR pass (perform const folding).
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.8.23. Finished fast OPT passes. (There is nothing left to do.)
 
 5.9. Executing WREDUCE pass (reducing word size of cells).
-Removed top 3 bits (of 5) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$358 ($eq).
-Removed top 3 bits (of 6) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$346 ($eq).
-Removed top 1 bits (of 2) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$338 ($eq).
-Removed top 1 bits (of 5) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$323 ($eq).
-Removed top 4 bits (of 6) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$306 ($eq).
-Removed top 1 bits (of 2) from port B of cell tt_um_krishkc5_tinysystolic.$procmux$53_CMP0 ($eq).
-Removed top 1 bits (of 3) from port B of cell tt_um_krishkc5_tinysystolic.$procmux$92_CMP0 ($eq).
-Removed top 1 bits (of 3) from port B of cell tt_um_krishkc5_tinysystolic.$procmux$196_CMP0 ($eq).
-Removed top 2 bits (of 3) from port B of cell tt_um_krishkc5_tinysystolic.$procmux$200_CMP0 ($eq).
+Removed top 3 bits (of 5) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$363 ($eq).
+Removed top 3 bits (of 6) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$351 ($eq).
+Removed top 1 bits (of 2) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$343 ($eq).
+Removed top 1 bits (of 5) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$328 ($eq).
+Removed top 4 bits (of 6) from port B of cell tt_um_krishkc5_tinysystolic.$auto$fsm_map.cc:77:implement_pattern_cache$311 ($eq).
+Removed top 1 bits (of 2) from port B of cell tt_um_krishkc5_tinysystolic.$procmux$58_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell tt_um_krishkc5_tinysystolic.$procmux$97_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell tt_um_krishkc5_tinysystolic.$procmux$201_CMP0 ($eq).
+Removed top 2 bits (of 3) from port B of cell tt_um_krishkc5_tinysystolic.$procmux$205_CMP0 ($eq).
 
 5.10. Executing PEEPOPT pass (run peephole optimizers).
 
@@ -732,7 +744,7 @@ Removed top 2 bits (of 3) from port B of cell tt_um_krishkc5_tinysystolic.$procm
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 
 5.12. Executing ALUMACC pass (create $alu and $macc cells).
 Extracting $alu and $macc cells in module tt_um_krishkc5_tinysystolic:
@@ -740,19 +752,19 @@ Extracting $alu and $macc cells in module tt_um_krishkc5_tinysystolic:
   creating $macc model for $sub$src/project.v:55$36 ($sub).
   creating $alu model for $macc $sub$src/project.v:55$36.
   creating $alu model for $macc $add$src/project.v:60$38.
-  creating $alu cell for $add$src/project.v:60$38: $auto$alumacc.cc:512:replace_alu$438
-  creating $alu cell for $sub$src/project.v:55$36: $auto$alumacc.cc:512:replace_alu$441
+  creating $alu cell for $add$src/project.v:60$38: $auto$alumacc.cc:512:replace_alu$443
+  creating $alu cell for $sub$src/project.v:55$36: $auto$alumacc.cc:512:replace_alu$446
   created 2 $alu and 0 $macc cells.
 Extracting $alu and $macc cells in module systolic_array:
   created 0 $alu and 0 $macc cells.
 Extracting $alu and $macc cells in module systolic_pe:
   created 0 $alu and 0 $macc cells.
-Extracting $alu and $macc cells in module mac_pe:
-  creating $macc model for $add$src/mac_pe.v:11$5 ($add).
-  creating $macc model for $mul$src/mac_pe.v:8$1 ($mul).
-  creating $alu model for $macc $add$src/mac_pe.v:11$5.
-  creating $macc cell for $mul$src/mac_pe.v:8$1: $auto$alumacc.cc:382:replace_macc$444
-  creating $alu cell for $add$src/mac_pe.v:11$5: $auto$alumacc.cc:512:replace_alu$445
+Extracting $alu and $macc cells in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100:
+  creating $macc model for $add$src/mac_pe.v:11$54 ($add).
+  creating $macc model for $mul$src/mac_pe.v:8$50 ($mul).
+  creating $alu model for $macc $add$src/mac_pe.v:11$54.
+  creating $macc cell for $mul$src/mac_pe.v:8$50: $auto$alumacc.cc:382:replace_macc$449
+  creating $alu cell for $add$src/mac_pe.v:11$54: $auto$alumacc.cc:512:replace_alu$450
   created 1 $alu and 1 $macc cells.
 
 5.13. Executing SHARE pass (SAT-based resource sharing).
@@ -763,7 +775,7 @@ Extracting $alu and $macc cells in module mac_pe:
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.14.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\tt_um_krishkc5_tinysystolic'.
@@ -775,9 +787,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 9 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 5 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 5 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
@@ -791,7 +803,7 @@ Running muxtree optimizer on module \systolic_array..
 Running muxtree optimizer on module \systolic_pe..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module \mac_pe..
+Running muxtree optimizer on module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Removed 0 multiplexer ports.
@@ -801,7 +813,7 @@ Removed 0 multiplexer ports.
   Optimizing cells in module \tt_um_krishkc5_tinysystolic.
   Optimizing cells in module \systolic_array.
   Optimizing cells in module \systolic_pe.
-  Optimizing cells in module \mac_pe.
+  Optimizing cells in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 Performed a total of 0 changes.
 
 5.14.5. Executing OPT_MERGE pass (detect identical cells).
@@ -814,9 +826,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 9 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 5 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 5 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.14.6. Executing OPT_DFF pass (perform DFF optimizations).
@@ -825,13 +837,13 @@ Removed a total of 0 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 
 5.14.8. Executing OPT_EXPR pass (perform const folding).
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.14.9. Finished fast OPT passes. (There is nothing left to do.)
 
@@ -853,7 +865,7 @@ Performed a total of 0 transformations.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 
 5.15.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
 
@@ -864,7 +876,7 @@ Performed a total of 0 transformations.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 
 5.15.10. Executing MEMORY_COLLECT pass (generating $mem cells).
 
@@ -872,7 +884,7 @@ Finding unused cells or wires in module \mac_pe..
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 
 5.17. Executing OPT pass (performing simple optimizations).
 
@@ -881,7 +893,7 @@ Optimizing module tt_um_krishkc5_tinysystolic.
 <suppressed ~20 debug messages>
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.17.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\tt_um_krishkc5_tinysystolic'.
@@ -893,9 +905,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 9 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 5 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 5 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.17.3. Executing OPT_DFF pass (perform DFF optimizations).
@@ -904,7 +916,7 @@ Removed a total of 0 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 Removed 0 unused cells and 12 unused wires.
 <suppressed ~1 debug messages>
 
@@ -918,7 +930,7 @@ Removed 0 unused cells and 12 unused wires.
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.19.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\tt_um_krishkc5_tinysystolic'.
@@ -930,9 +942,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 9 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 5 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 5 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.19.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
@@ -946,7 +958,7 @@ Running muxtree optimizer on module \systolic_array..
 Running muxtree optimizer on module \systolic_pe..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module \mac_pe..
+Running muxtree optimizer on module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Removed 0 multiplexer ports.
@@ -954,13 +966,13 @@ Removed 0 multiplexer ports.
 
 5.19.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
   Optimizing cells in module \tt_um_krishkc5_tinysystolic.
-    New ctrl vector for $pmux cell $procmux$91: { $eq$src/project.v:19$22_Y $eq$src/project.v:18$15_Y }
-    New ctrl vector for $pmux cell $procmux$59: $procmux$60_CMP
-    New ctrl vector for $pmux cell $procmux$144: $eq$src/project.v:20$27_Y
+    New ctrl vector for $pmux cell $procmux$96: { $eq$src/project.v:19$22_Y $eq$src/project.v:18$15_Y }
+    New ctrl vector for $pmux cell $procmux$64: $procmux$65_CMP
+    New ctrl vector for $pmux cell $procmux$149: $eq$src/project.v:20$27_Y
   Optimizing cells in module \tt_um_krishkc5_tinysystolic.
   Optimizing cells in module \systolic_array.
   Optimizing cells in module \systolic_pe.
-  Optimizing cells in module \mac_pe.
+  Optimizing cells in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 Performed a total of 3 changes.
 
 5.19.5. Executing OPT_MERGE pass (detect identical cells).
@@ -973,9 +985,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 9 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 5 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 5 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.19.6. Executing OPT_SHARE pass.
@@ -986,14 +998,14 @@ Removed a total of 0 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 
 5.19.9. Executing OPT_EXPR pass (perform const folding).
 Optimizing module tt_um_krishkc5_tinysystolic.
 <suppressed ~1 debug messages>
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.19.10. Rerunning OPT passes. (Maybe there is more to do..)
 
@@ -1008,7 +1020,7 @@ Running muxtree optimizer on module \systolic_array..
 Running muxtree optimizer on module \systolic_pe..
   Creating internal representation of mux trees.
   No muxes found in this module.
-Running muxtree optimizer on module \mac_pe..
+Running muxtree optimizer on module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Removed 0 multiplexer ports.
@@ -1018,7 +1030,7 @@ Removed 0 multiplexer ports.
   Optimizing cells in module \tt_um_krishkc5_tinysystolic.
   Optimizing cells in module \systolic_array.
   Optimizing cells in module \systolic_pe.
-  Optimizing cells in module \mac_pe.
+  Optimizing cells in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 Performed a total of 0 changes.
 
 5.19.13. Executing OPT_MERGE pass (detect identical cells).
@@ -1031,9 +1043,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 9 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 5 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 5 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 0 cells.
 
 5.19.14. Executing OPT_SHARE pass.
@@ -1044,13 +1056,13 @@ Removed a total of 0 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
 
 5.19.17. Executing OPT_EXPR pass (perform const folding).
 Optimizing module tt_um_krishkc5_tinysystolic.
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.19.18. Finished fast OPT passes. (There is nothing left to do.)
 
@@ -1087,7 +1099,7 @@ Generating RTLIL representation for module `$input_port'.
 Successfully finished Verilog frontend.
 
 5.20.2. Continuing TECHMAP pass.
-Using template $paramod$6df0329addda9228fcc2546de2aaf14ad26c98e1\_90_alu for cells of type $alu.
+Using template $paramod$ee3d784672cdb1cb32d9a801a3af776716f16b74\_90_alu for cells of type $alu.
 Using extmapper maccmap for cells of type $macc_v2.
   add \a * \b (4x4 bits, signed)
 Using extmapper simplemap for cells of type $sdffe.
@@ -1099,8 +1111,8 @@ Using extmapper simplemap for cells of type $and.
 Using extmapper simplemap for cells of type $not.
 Using extmapper simplemap for cells of type $mux.
 Using extmapper simplemap for cells of type $pos.
-Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000010000 for cells of type $fa.
-Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000010000 for cells of type $lcu.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000001100 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000001100 for cells of type $lcu.
 Using extmapper simplemap for cells of type $xor.
 Using extmapper simplemap for cells of type $or.
 Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000001000 for cells of type $lcu.
@@ -1122,7 +1134,7 @@ Using template $paramod\_90_lcu_brent_kung\WIDTH=32'0000000000000000000000000000
 Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000000011 for cells of type $fa.
 Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000011 for cells of type $lcu.
 No more expansions possible.
-<suppressed ~1051 debug messages>
+<suppressed ~1027 debug messages>
 
 5.21. Executing OPT pass (performing simple optimizations).
 
@@ -1131,8 +1143,8 @@ Optimizing module tt_um_krishkc5_tinysystolic.
 <suppressed ~195 debug messages>
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
-<suppressed ~179 debug messages>
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
+<suppressed ~163 debug messages>
 
 5.21.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\tt_um_krishkc5_tinysystolic'.
@@ -1151,21 +1163,21 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 15 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 283 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
-Computing hashes of 265 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
-Computing hashes of 264 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
-Computing hashes of 262 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
-Computing hashes of 260 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
-Computing hashes of 259 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
-<suppressed ~72 debug messages>
-Removed a total of 93 cells.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 243 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 229 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 228 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 226 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 224 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 223 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+<suppressed ~60 debug messages>
+Removed a total of 89 cells.
 
 5.21.3. Executing OPT_DFF pass (perform DFF optimizations).
 
@@ -1173,9 +1185,9 @@ Removed a total of 93 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
-Removed 46 unused cells and 476 unused wires.
-<suppressed ~48 debug messages>
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
+Removed 43 unused cells and 473 unused wires.
+<suppressed ~45 debug messages>
 
 5.21.5. Finished fast OPT passes.
 
@@ -1252,10 +1264,10 @@ ABC RESULTS:           input signals:        5
 ABC RESULTS:          output signals:        2
 Removing temp directory.
 
-5.22.4. Extracting gate netlist of module `\mac_pe' to `<abc-temp-dir>/input.blif'..
+5.22.4. Extracting gate netlist of module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100' to `<abc-temp-dir>/input.blif'..
 
 5.22.4.1. Executed ABC.
-Extracted 204 gates and 230 wires to a netlist network with 26 inputs and 17 outputs.
+Extracted 175 gates and 197 wires to a netlist network with 22 inputs and 13 outputs.
 Running ABC script: <abc-temp-dir>/abc.script
 ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
 ABC: + read_blif <abc-temp-dir>/input.blif
@@ -1267,18 +1279,18 @@ ABC: + write_blif <abc-temp-dir>/output.blif
 
 5.22.4.2. Re-integrating ABC results.
 ABC RESULTS:               AND cells:       14
-ABC RESULTS:            ANDNOT cells:       68
+ABC RESULTS:            ANDNOT cells:       57
 ABC RESULTS:               MUX cells:        1
 ABC RESULTS:              NAND cells:        4
-ABC RESULTS:               NOR cells:       11
-ABC RESULTS:               NOT cells:        9
-ABC RESULTS:                OR cells:       13
-ABC RESULTS:             ORNOT cells:       21
+ABC RESULTS:               NOR cells:        7
+ABC RESULTS:               NOT cells:        8
+ABC RESULTS:                OR cells:       11
+ABC RESULTS:             ORNOT cells:       17
 ABC RESULTS:              XNOR cells:        4
-ABC RESULTS:               XOR cells:       63
-ABC RESULTS:        internal signals:      187
-ABC RESULTS:           input signals:       26
-ABC RESULTS:          output signals:       17
+ABC RESULTS:               XOR cells:       55
+ABC RESULTS:        internal signals:      162
+ABC RESULTS:           input signals:       22
+ABC RESULTS:          output signals:       13
 Removing temp directory.
 Removing global temp directory.
 
@@ -1289,7 +1301,7 @@ Optimizing module tt_um_krishkc5_tinysystolic.
 <suppressed ~10 debug messages>
 Optimizing module systolic_array.
 Optimizing module systolic_pe.
-Optimizing module mac_pe.
+Optimizing module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100.
 
 5.23.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\tt_um_krishkc5_tinysystolic'.
@@ -1304,9 +1316,9 @@ Finding duplicate cells in `\systolic_array'.
 Finding identical cells in module `\systolic_pe'.
 Computing hashes of 14 cells of `\systolic_pe'.
 Finding duplicate cells in `\systolic_pe'.
-Finding identical cells in module `\mac_pe'.
-Computing hashes of 224 cells of `\mac_pe'.
-Finding duplicate cells in `\mac_pe'.
+Finding identical cells in module `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Computing hashes of 190 cells of `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
+Finding duplicate cells in `$paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100'.
 Removed a total of 1 cells.
 
 5.23.3. Executing OPT_DFF pass (perform DFF optimizations).
@@ -1315,8 +1327,8 @@ Removed a total of 1 cells.
 Finding unused cells or wires in module \tt_um_krishkc5_tinysystolic..
 Finding unused cells or wires in module \systolic_array..
 Finding unused cells or wires in module \systolic_pe..
-Finding unused cells or wires in module \mac_pe..
-Removed 1 unused cells and 418 unused wires.
+Finding unused cells or wires in module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100..
+Removed 1 unused cells and 397 unused wires.
 <suppressed ~8 debug messages>
 
 5.23.5. Finished fast OPT passes.
@@ -1328,13 +1340,13 @@ Attribute `top' found on module `tt_um_krishkc5_tinysystolic'. Setting top modul
 Top module:  \tt_um_krishkc5_tinysystolic
 Used module:     \systolic_array
 Used module:         \systolic_pe
-Used module:             \mac_pe
+Used module:             $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100
 
 5.24.2. Analyzing design hierarchy..
 Top module:  \tt_um_krishkc5_tinysystolic
 Used module:     \systolic_array
 Used module:         \systolic_pe
-Used module:             \mac_pe
+Used module:             $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100
 Removed 0 unused modules.
 
 5.25. Printing statistics.
@@ -1385,10 +1397,10 @@ Removed 0 unused modules.
 
         +----------Local Count, excluding submodules.
         |
-       16 wires
-       43 wire bits
-       13 public wires
-       40 public wire bits
+       17 wires
+       55 wire bits
+       14 public wires
+       52 public wire bits
        13 ports
        40 port bits
        13 cells
@@ -1397,65 +1409,65 @@ Removed 0 unused modules.
         1   $_ORNOT_
        10   $_SDFFE_PP0P_
         1 submodules
-        1   mac_pe
+        1   $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100
 
-=== mac_pe ===
+=== $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100 ===
 
         +----------Local Count, excluding submodules.
         |
-      201 wires
-      252 wire bits
+      175 wires
+      214 wire bits
         7 public wires
-       28 public wire bits
+       24 public wire bits
         7 ports
-       28 port bits
-      224 cells
-       68   $_ANDNOT_
+       24 port bits
+      190 cells
+       57   $_ANDNOT_
        14   $_AND_
         1   $_MUX_
         4   $_NAND_
-       11   $_NOR_
-        9   $_NOT_
-       21   $_ORNOT_
-       13   $_OR_
-       16   $_SDFFE_PP0P_
+        7   $_NOR_
+        8   $_NOT_
+       17   $_ORNOT_
+       11   $_OR_
+       12   $_SDFFE_PP0P_
         4   $_XNOR_
-       63   $_XOR_
+       55   $_XOR_
 
 === design hierarchy ===
 
         +----------Count including submodules.
         |
-     1284 tt_um_krishkc5_tinysystolic
+     1148 tt_um_krishkc5_tinysystolic
        10 systolic_array
        13   systolic_pe
-      224     mac_pe
+      190     $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100
 
         +----------Count including submodules.
         |
-     1214 wires
-     1743 wire bits
-      136 public wires
-      542 public wire bits
+     1114 wires
+     1639 wire bits
+      140 public wires
+      574 public wire bits
       101 ports
-      400 port bits
+      384 port bits
         - memories
         - memory bits
         - processes
-     1284 cells
-      406   $_ANDNOT_
+     1148 cells
+      362   $_ANDNOT_
        61   $_AND_
         4   $_DFF_P_
        34   $_MUX_
        33   $_NAND_
-       53   $_NOR_
-       59   $_NOT_
-      117   $_ORNOT_
-      113   $_OR_
+       37   $_NOR_
+       55   $_NOT_
+      101   $_ORNOT_
+      105   $_OR_
        18   $_SDFFE_PN0P_
-      113   $_SDFFE_PP0P_
+       97   $_SDFFE_PP0P_
        17   $_XNOR_
-      256   $_XOR_
+      224   $_XOR_
         1 submodules
         1   systolic_array
 
@@ -1463,14 +1475,14 @@ Removed 0 unused modules.
 Checking module tt_um_krishkc5_tinysystolic...
 Checking module systolic_array...
 Checking module systolic_pe...
-Checking module mac_pe...
+Checking module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100...
 Found and reported 0 problems.
 
 6. Executing CHECK pass (checking for obvious problems).
 Checking module tt_um_krishkc5_tinysystolic...
 Checking module systolic_array...
 Checking module systolic_pe...
-Checking module mac_pe...
+Checking module $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100...
 Found and reported 0 problems.
 
 7. Printing statistics.
@@ -1521,10 +1533,10 @@ Found and reported 0 problems.
 
         +----------Local Count, excluding submodules.
         |
-       16 wires
-       43 wire bits
-       13 public wires
-       40 public wire bits
+       17 wires
+       55 wire bits
+       14 public wires
+       52 public wire bits
        13 ports
        40 port bits
        13 cells
@@ -1533,68 +1545,68 @@ Found and reported 0 problems.
         1   $_ORNOT_
        10   $_SDFFE_PP0P_
         1 submodules
-        1   mac_pe
+        1   $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100
 
-=== mac_pe ===
+=== $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100 ===
 
         +----------Local Count, excluding submodules.
         |
-      201 wires
-      252 wire bits
+      175 wires
+      214 wire bits
         7 public wires
-       28 public wire bits
+       24 public wire bits
         7 ports
-       28 port bits
-      224 cells
-       68   $_ANDNOT_
+       24 port bits
+      190 cells
+       57   $_ANDNOT_
        14   $_AND_
         1   $_MUX_
         4   $_NAND_
-       11   $_NOR_
-        9   $_NOT_
-       21   $_ORNOT_
-       13   $_OR_
-       16   $_SDFFE_PP0P_
+        7   $_NOR_
+        8   $_NOT_
+       17   $_ORNOT_
+       11   $_OR_
+       12   $_SDFFE_PP0P_
         4   $_XNOR_
-       63   $_XOR_
+       55   $_XOR_
 
 === design hierarchy ===
 
         +----------Count including submodules.
         |
-     1284 tt_um_krishkc5_tinysystolic
+     1148 tt_um_krishkc5_tinysystolic
        10 systolic_array
        13   systolic_pe
-      224     mac_pe
+      190     $paramod\mac_pe\ACC_W=s32'00000000000000000000000000001100
 
         +----------Count including submodules.
         |
-     1214 wires
-     1743 wire bits
-      136 public wires
-      542 public wire bits
+     1114 wires
+     1639 wire bits
+      140 public wires
+      574 public wire bits
       101 ports
-      400 port bits
+      384 port bits
         - memories
         - memory bits
         - processes
-     1284 cells
-      406   $_ANDNOT_
+     1148 cells
+      362   $_ANDNOT_
        61   $_AND_
         4   $_DFF_P_
        34   $_MUX_
        33   $_NAND_
-       53   $_NOR_
-       59   $_NOT_
-      117   $_ORNOT_
-      113   $_OR_
+       37   $_NOR_
+       55   $_NOT_
+      101   $_ORNOT_
+      105   $_OR_
        18   $_SDFFE_PN0P_
-      113   $_SDFFE_PP0P_
+       97   $_SDFFE_PP0P_
        17   $_XNOR_
-      256   $_XOR_
+      224   $_XOR_
         1 submodules
         1   systolic_array
 
-End of script. Logfile hash: f321c542cd, CPU: user 0.09s system 0.01s, MEM: 22.14 MB peak
+End of script. Logfile hash: e60650279b, CPU: user 0.09s system 0.01s, MEM: 21.72 MB peak
 Yosys 0.63 (git sha1 70a11c6bf0e8dd669f56c7da3587f78b405138e2, clang++ 17.0.0 -fPIC -O3)
-Time spent: 53% 1x abc (0 sec), 12% 25x opt_expr (0 sec), ...
+Time spent: 54% 1x abc (0 sec), 12% 25x opt_expr (0 sec), ...

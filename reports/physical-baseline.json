@@ -1,0 +1,21 @@
+{
+  "commit": "8f49f602017c429c50157e5656e8ad2f33f91345",
+  "run": 38080572847,
+  "clock_period_ns": 20,
+  "tile": "1x1",
+  "die_area_um": [
+    0,
+    0,
+    161,
+    111.52
+  ],
+  "metrics": {
+    "design__instance__area__stdcell": 13309,
+    "design__instance__utilization": 0.806934,
+    "design__instance__count__class:sequential_cell": 112,
+    "timing__setup__ws": 5.062258311379598,
+    "timing__hold__ws": 0.11361295559252105,
+    "magic__drc_error__count": 0,
+    "design__lvs_error__count": 0
+  }
+}

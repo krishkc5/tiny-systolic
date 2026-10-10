@@ -2,7 +2,7 @@
 
 A 2×2 signed INT4 systolic-array matrix accelerator for Tiny Tapeout SKY26d.
 
-**Complete RTL and local verification.** Four processing elements compute C[2,2] = A[2,K] × B[K,2] for K=1..16 with 16-bit accumulators. The byte-wide streaming controller provides start, operand transfer, result readback, abort, ready/busy/done and sticky error status. The host applies ML quantization, bias, activation, and larger-matrix tiling.
+**Complete RTL and local verification.** Four processing elements compute C[2,2] = A[2,K] × B[K,2] for K=1..16 with 12-bit internal accumulators and 16-bit results. The byte-wide streaming controller provides start, operand transfer, result readback, abort, ready/busy/done and sticky error status. The host applies ML quantization, bias, activation, and larger-matrix tiling.
 
 ## Quick start
 
@@ -16,7 +16,7 @@ make check
 make synth
 ```
 
-`make check` runs strict RTL lint, exhaustive MAC tests, 1,600 array tests, Python reference tests, and full-chip cocotb tests. Cocotb tests use package-level signals and are reused by the official gate-level workflow. Run `make chip-test` for only the full-chip suite.
+`make check` runs strict RTL lint, exhaustive MAC tests, 1,600 array tests, Python reference tests, and full-chip cocotb tests, including 360 digit-classifier images. Cocotb tests use package-level signals and are reused by the official gate-level workflow. Run `make chip-test` for only the full-chip suite.
 
 ## Architecture
 
@@ -35,7 +35,7 @@ See [the protocol](docs/protocol.md) for the complete pin map, command semantics
 - `docs/`: architecture, protocol, submission metadata and pricing research
 - `reports/`: test evidence and synthesis reports
 - `benchmarks/`: performance metric definitions; no physical measurements yet
-- `ml/`: digit-classifier integration plan; model training is not implemented
+- `ml/`: trained INT4 digit classifier and reproducible training script
 
 ## Physical flow
 
@@ -43,4 +43,8 @@ Official SKY26d actions run RTL tests, GDS generation, precheck, gate-level simu
 
 ## Remaining portfolio work
 
-Train/quantize the digit classifier; add a board transport driver, a sequential scheduled baseline and performance plots; validate final physical results and eventually test silicon. The chip's RTL does not depend on completing those host-side tasks.
+Improve INT4 accuracy if needed; add a board transport driver, a sequential scheduled baseline and performance plots; validate final physical results and eventually test silicon. The chip's RTL does not depend on completing those host-side tasks.
+
+## ML result
+
+The host-assisted digit classifier scores 90.83% on 360 held-out images versus 95.56% for the floating-point model. RTL exactly matches the quantized model across 6,660 matrix tiles. See [ML details](ml/README.md) for host/chip responsibilities and [optimization notes](reports/optimization.md) for the accumulator-width change.

@@ -1,6 +1,6 @@
 # How it works
 
-TinySystolic is a 2x2 output-stationary systolic matrix accelerator. Four signed INT4 multipliers and INT16 accumulators compute C[2,2] = A[2,K] times B[K,2], K=1..16. Operands move right/down with registered valid bits and one-cycle boundary skew. A synchronous byte-wide controller assembles input pairs and drains the pipeline. No model weights or firmware are stored on the chip.
+TinySystolic is a 2x2 output-stationary systolic matrix accelerator. Four signed INT4 multipliers and 12-bit internal accumulators with INT16 readback compute C[2,2] = A[2,K] times B[K,2], K=1..16. Operands move right/down with registered valid bits and one-cycle boundary skew. A synchronous byte-wide controller assembles input pairs and drains the pipeline. No model weights or firmware are stored on the chip.
 
 # How to test
 
@@ -14,4 +14,4 @@ See docs/protocol.md in the repository for the complete protocol. Tests cover ex
 
 # External hardware
 
-A compatible Tiny Tapeout devkit and synchronous host interface are needed for silicon testing. The host performs ML model preparation, bias, activation, scaling and larger-matrix tiling. The trained ML demo and board transport driver are future work. No external hardware is needed for simulation.
+A compatible Tiny Tapeout devkit and synchronous host interface are needed for silicon testing. The host performs ML model preparation, bias, activation, scaling and larger-matrix tiling. The repository includes a trained INT4 digit model tested through RTL; the board transport driver is future work. No external hardware is needed for simulation.
