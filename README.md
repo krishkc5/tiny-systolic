@@ -39,7 +39,7 @@ See [the protocol](docs/protocol.md) for the complete pin map, command semantics
 
 ## Physical flow
 
-Official SKY26d actions run RTL tests, GDS generation, precheck, gate-level simulation, docs, and the layout viewer. `info.yaml` requests one tile and a 10 MHz clock. Physical-flow results must be checked before treating those targets as achieved. Generic synthesis is not a measurement of physical area or timing. No fabrication purchase or submission has been made.
+Official SKY26d actions run RTL tests, GDS generation, precheck, gate-level simulation, docs, and the layout viewer. `info.yaml` requests one tile and a 10 MHz clock. The optimized design passes GDS, precheck, gate-level simulation (including ML), RTL tests and docs, with 12.5% lower routed standard-cell area. See reports/optimization.md for the exact validated revision. The flow uses a 20 ns timing constraint; 10 MHz is the intended operating clock. Generic synthesis is not a measurement of physical area or timing. No fabrication purchase or submission has been made.
 
 ## Remaining portfolio work
 

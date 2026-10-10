@@ -29,3 +29,5 @@ Training uses scikit-learn's bundled dataset; no external data downloads are nee
 Each two-image batch uses 37 K=16 tile transactions: 32 for layer one and five for layer two. Each tile consumes 43 protocol clocks, so **1,591 cycles per pair** (286,380 total for 360 images). At the intended 10 MHz operating clock, that is 159.1 microseconds per pair of ideal chip-protocol time. This excludes host computation, transport latency and host idle periods; it is not a measured end-to-end or silicon performance claim.
 
 Reports: ../reports/ml-software.json and ../reports/ml-rtl.json.
+
+Dataset attribution and transformation details: [DATASET-NOTICE.md](DATASET-NOTICE.md).
