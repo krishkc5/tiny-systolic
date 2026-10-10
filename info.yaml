@@ -1,9 +1,9 @@
 # Tiny Tapeout project information
 project:
-  title:        "TinySystolic INT4 accelerator scaffold"      # Project title
+  title:        "TinySystolic INT4 systolic accelerator"      # Project title
   author:       "Krishna Chemudupati"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "Scaffold only: INT4 MAC bring-up; full array pending"      # One line description of what your project does
+  description:  "2x2 signed INT4 systolic matrix accelerator with streaming interface"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     10000000       # Clock frequency in Hz (or 0 if not applicable)
 
@@ -19,39 +19,41 @@ project:
   source_files:
     - "project.v"
     - "mac_pe.v"
+    - "systolic_pe.v"
+    - "systolic_array.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: "A[0]"
-  ui[1]: "A[1]"
-  ui[2]: "A[2]"
-  ui[3]: "A[3]"
-  ui[4]: "B[0]"
-  ui[5]: "B[1]"
-  ui[6]: "B[2]"
-  ui[7]: "B[3]"
+  ui[0]: "data[0]"
+  ui[1]: "data[1]"
+  ui[2]: "data[2]"
+  ui[3]: "data[3]"
+  ui[4]: "data[4]"
+  ui[5]: "data[5]"
+  ui[6]: "data[6]"
+  ui[7]: "data[7]"
 
   # Outputs
-  uo[0]: "accumulator_byte[0]"
-  uo[1]: "accumulator_byte[1]"
-  uo[2]: "accumulator_byte[2]"
-  uo[3]: "accumulator_byte[3]"
-  uo[4]: "accumulator_byte[4]"
-  uo[5]: "accumulator_byte[5]"
-  uo[6]: "accumulator_byte[6]"
-  uo[7]: "accumulator_byte[7]"
+  uo[0]: "result[0]"
+  uo[1]: "result[1]"
+  uo[2]: "result[2]"
+  uo[3]: "result[3]"
+  uo[4]: "result[4]"
+  uo[5]: "result[5]"
+  uo[6]: "result[6]"
+  uo[7]: "result[7]"
 
   # Bidirectional pins
-  uio[0]: "clear"
-  uio[1]: "valid"
-  uio[2]: "read_high_byte"
+  uio[0]: "command[0]"
+  uio[1]: "command[1]"
+  uio[2]: "command[2]"
   uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  uio[4]: "ready"
+  uio[5]: "busy"
+  uio[6]: "done"
+  uio[7]: "error"
 
 # Do not change!
 yaml_version: 6

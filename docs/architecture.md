@@ -1,12 +1,12 @@
 # Tiny Tapeout INT4 systolic ML accelerator
 
-Status: architecture proposal; no RTL or measured hardware results yet.
+Status: complete RTL with local MAC, array, and chip-level verification. Physical implementation is being validated through the SKY26d workflow. See protocol.md for the implemented interface.
 
 ## Portfolio objective
 
-Design, verify, and physically implement a small matrix-multiplication accelerator. Explain its dataflow and measure when parallel compute helps and when external data transfer dominates. Target Tiny Tapeout; shuttle, tile allocation, and timing target remain undecided.
+Design, verify, and physically implement a small matrix-multiplication accelerator. Explain its dataflow and measure when parallel compute helps and when external data transfer dominates. Target SKY26d; initial allocation is one tile and timing target is 10 MHz, pending physical verification.
 
-## Initial architecture
+## Implemented architecture
 
 - Four processing elements in a 2 × 2 output-stationary systolic array.
 - Signed INT4 operands (−8 through 7), signed 16-bit accumulators.
@@ -19,11 +19,11 @@ Design, verify, and physically implement a small matrix-multiplication accelerat
 
 ## Interface and bandwidth decision
 
-Keep the arithmetic core independent of its Tiny Tapeout wrapper. The proposed wrapper uses an 8-bit data input and 8-bit data output plus control/status on bidirectional pins configured to fixed directions. Verify final pin assignments against the selected shuttle template.
+Keep the arithmetic core independent of its Tiny Tapeout wrapper. The implemented wrapper uses an 8-bit data input and 8-bit data output plus control/status on bidirectional pins configured to fixed directions. Exact commands and fixed pin directions are defined in protocol.md.
 
-One full array injection needs four INT4 values, or 16 bits, per cycle. An 8-bit input cannot sustain that rate without preloading, a wider interface, or input bubbles. Start with two input-transfer cycles per injection and explicit valid propagation. Compare this streaming implementation against a preloaded simulation harness to quantify bandwidth loss. Do not add a large operand buffer before measuring its area cost.
+One full array injection needs four INT4 values, or 16 bits, per cycle. An 8-bit input cannot sustain that rate without preloading, a wider interface, or input bubbles. The implementation uses two input-transfer cycles per injection and explicit valid propagation. Compare this streaming implementation against a preloaded simulation harness to quantify bandwidth loss. Do not add a large operand buffer before measuring its area cost.
 
-Read four 16-bit results as eight output bytes. Define exact command acceptance, busy behavior, reset behavior, and result ordering before writing the wrapper. All control is synchronous to the supplied clock; host signals must satisfy its timing requirements.
+Read four 16-bit results as eight output bytes. Command acceptance, busy behavior, reset behavior and result ordering are documented in protocol.md. All control is synchronous to the supplied clock; host signals must satisfy its timing requirements.
 
 ## Performance experiments
 

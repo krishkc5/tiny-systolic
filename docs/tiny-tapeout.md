@@ -44,7 +44,7 @@ The FAQ's roughly 160 x 100 micrometer / 1,000-gate description explicitly conce
 - Passing synthesis alone does not establish fit. The design must complete the official physical implementation and required checks; passing GDS and documentation builds are required before submission.
 - Submit a specific successful revision through the Tiny Tapeout portal. Updating GitHub alone does not update a submitted revision.
 - It is possible to try larger tile configurations before buying them. For this accelerator, explore one, two, and four tiles; none is yet validated for the full design.
-- Current local info.yaml and single-MAC wrapper are bring-up scaffolding. The full array and controller remain milestones. Official SKY26d physical workflows are now installed.
+- The complete array/controller is implemented. Official SKY26d workflows are installed; physical verification determines whether the requested one tile is sufficient.
 
 Sources:
 https://tinytapeout.com/faq/

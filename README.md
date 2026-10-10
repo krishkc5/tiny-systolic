@@ -1,42 +1,46 @@
 # TinySystolic
 
-An INT4 systolic-array ML accelerator for Tiny Tapeout.
+A 2×2 signed INT4 systolic-array matrix accelerator for Tiny Tapeout SKY26d.
 
-**Status: runnable scaffold.** The signed multiply-accumulate building block and bring-up wrapper are implemented. The four-PE array, controller, trained ML demo, physical implementation, and performance measurements are still pending.
+**Complete RTL and local verification.** Four processing elements compute C[2,2] = A[2,K] × B[K,2] for K=1..16 with 16-bit accumulators. The byte-wide streaming controller provides start, operand transfer, result readback, abort, ready/busy/done and sticky error status. The host applies ML quantization, bias, activation, and larger-matrix tiling.
 
 ## Quick start
 
-Requirements: Python 3, Verilator, make, and a C++ compiler. Yosys is optional.
+Requirements: Python 3.11, Icarus Verilog, Verilator, make, C++ compiler; Yosys for generic synthesis.
 
 ```sh
-make check   # RTL lint, exhaustive MAC test, integer-reference tests
-make synth   # generic synthesis only; not physical area/timing
+python3.11 -m venv .venv
+. .venv/bin/activate
+pip install -r test/requirements.txt
+make check
+make synth
 ```
+
+`make check` runs strict RTL lint, exhaustive MAC tests, 1,600 array tests, Python reference tests, and full-chip cocotb tests. Cocotb tests use package-level signals and are reused by the official gate-level workflow. Run `make chip-test` for only the full-chip suite.
+
+## Architecture
+
+A moves right, B moves down, and each PE keeps a local partial sum. Internal row/column skew aligns operands; separate valid bits prevent bubbles from accumulating stale data. The core supports a full quartet per clock. The chip receives two bytes per quartet and drains two enabled clocks after the last byte. No large operand memory is needed.
+
+See [the protocol](docs/protocol.md) for the complete pin map, command semantics, result ordering, error handling, and cycle counts. Note that uio[7:4] are chip outputs: do not drive these from the host.
 
 ## Project map
 
-- `src/`: synthesizable MAC and Tiny Tapeout bring-up wrapper
-- `test/`: executable hardware and Python tests
-- `model/`: signed INT4 matrix reference
-- `benchmarks/`: metric contract and empty results schema
-- `ml/`: digit-classifier integration plan
-- `docs/architecture.md`: planned accelerator and verification milestones
-- `docs/info.md`: implemented bring-up interface
-- `docs/tiny-tapeout.md`: dated pricing and area research
-- `docs/template-provenance.md`: official template version and migration steps
-- `reports/`: generated synthesis and future physical reports
-- `scripts/`: future host tooling
+- `src/mac_pe.v`: signed multiplier/accumulator
+- `src/systolic_pe.v`: registered operand/valid forwarding
+- `src/systolic_array.v`: four PEs and boundary skew
+- `src/project.v`: streaming controller and Tiny Tapeout wrapper
+- `test/`: MAC, core and pin-level chip tests
+- `model/`: independent integer matrix reference
+- `docs/`: architecture, protocol, submission metadata and pricing research
+- `reports/`: test evidence and synthesis reports
+- `benchmarks/`: performance metric definitions; no physical measurements yet
+- `ml/`: digit-classifier integration plan; model training is not implemented
 
-## Next milestones
+## Physical flow
 
-1. Add operand forwarding, valid propagation, and a tested 2x2 array.
-2. Define and verify the streaming byte interface and controller.
-3. Implement equivalent sequential baseline and reproducible cycle benchmarks.
-4. Train and quantize the digit model; verify inference through RTL.
-5. Run the SKY26d physical flow on the completed accelerator to determine tile fit.
+Official SKY26d actions run RTL tests, GDS generation, precheck, gate-level simulation, docs, and the layout viewer. `info.yaml` requests one tile and a 10 MHz clock. Physical-flow results must be checked before treating those targets as achieved. Generic synthesis is not a measurement of physical area or timing. No fabrication purchase or submission has been made.
 
-The repository uses the official SKY130 template with SKY26d workflows. `info.yaml` requests one tile at a 10 MHz target for bring-up only; neither is a full-accelerator result. GitHub workflows build the current single-MAC scaffold; no fabrication purchase or submission has been made.
+## Remaining portfolio work
 
-## GitHub builds
-
-The official SKY26d workflows run RTL simulation, layout generation, precheck, gate-level simulation, documentation, and the layout viewer. The separate verification workflow runs our Verilator and integer-model tests. `test/test.py` exercises the external interface in both RTL and gate-level simulation. Physical results initially describe only the single-MAC scaffold.
+Train/quantize the digit classifier; add a board transport driver, a sequential scheduled baseline and performance plots; validate final physical results and eventually test silicon. The chip's RTL does not depend on completing those host-side tasks.

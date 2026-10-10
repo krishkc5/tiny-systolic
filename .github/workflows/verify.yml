@@ -1,4 +1,4 @@
-name: Verify scaffold
+name: Verify accelerator
 on: [push, pull_request, workflow_dispatch]
 jobs:
   verify:
@@ -6,6 +6,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install simulator
-        run: sudo apt-get update && sudo apt-get install -y verilator
+        run: sudo apt-get update && sudo apt-get install -y verilator iverilog
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - run: pip install -r test/requirements.txt
       - name: Check RTL and integer model
         run: make check
