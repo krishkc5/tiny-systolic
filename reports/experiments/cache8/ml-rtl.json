@@ -1,0 +1,11 @@
+{
+  "images": 360,
+  "correct": 327,
+  "tiles": 13320,
+  "mismatches": 0,
+  "weight_load_transactions": 74,
+  "reuse_transactions": 13246,
+  "protocol_cycles": 253672,
+  "baseline_cycles": 286380,
+  "scope": "Full-dataset weight-stationary schedule; excludes host storage/work/transport; not single-image latency"
+}

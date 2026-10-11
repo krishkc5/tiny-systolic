@@ -22,9 +22,12 @@
   "//": "Repair against the slow signoff corner without relaxing electrical limits.",
   "DEFAULT_CORNER": "max_ss_100C_1v60",
   "RUN_POST_GRT_DESIGN_REPAIR": true,
-  "DESIGN_REPAIR_MAX_SLEW_PCT": 30,
+  "DESIGN_REPAIR_MAX_SLEW_PCT": 50,
   "DESIGN_REPAIR_MAX_CAP_PCT": 30,
   "CTS_SINK_CLUSTERING_SIZE": 10,
+  "CTS_DISTANCE_BETWEEN_BUFFERS": 20,
+  "GRT_DESIGN_REPAIR_MAX_SLEW_PCT": 50,
+  "GRT_DESIGN_REPAIR_MAX_CAP_PCT": 30,
   "STA_EXTRA_CORNER_TCL_FILE": "dir::sta_audit.tcl",
 
   "//": "Hold slack margin - Increase them in case you are getting hold violations.",

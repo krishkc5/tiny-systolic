@@ -14,21 +14,21 @@ module tt_um_krishkc5_tinysystolic (
     reg half, drain_last, error;
     reg [7:0] a_pair;
     reg [2:0] read_index;
-    // Fixed K=16 cache. A completed normal K=16 load captures B; REUSE
-    // rotates the bank once per accepted A byte, returning after 16 steps.
+    // Fixed K=8 cache. A completed normal K=8 load captures B; REUSE
+    // rotates the bank once per accepted A byte, returning after 8 steps.
     // Data bits need no reset: cache_valid prevents observation until filled.
-    reg [127:0] weights;
+    reg [63:0] weights;
     reg cache_valid, cache_fill, reuse_mode;
     wire [2:0] command = uio_in[2:0];
     wire start_ok = command == START && (state == IDLE || state == DONE) && ui_in[7:4] == 0;
     wire reuse_ok = command == REUSE && (state == IDLE || state == DONE)
-                    && cache_valid && ui_in == 8'h0f;
+                    && cache_valid && ui_in == 8'h07;
     wire clear = ena && (command == ABORT || start_ok || reuse_ok);
     wire inject = ena && state == LOAD && command == DATA && (half || reuse_mode);
     wire [7:0] array_a = reuse_mode ? ui_in : a_pair;
     wire [7:0] array_b = reuse_mode ? weights[7:0] : ui_in;
     always @(posedge clk) begin
-        if (rst_n && inject) weights <= {array_b, weights[127:8]};
+        if (rst_n && inject) weights <= {array_b, weights[63:8]};
     end
     wire signed [15:0] c00, c01, c10, c11;
     systolic_array array (.clk(clk), .rst_n(rst_n), .clear(clear), .step(ena), .valid(inject),
@@ -59,12 +59,12 @@ module tt_um_krishkc5_tinysystolic (
                         state <= LOAD; remaining <= ui_in[3:0]; half <= 0;
                         drain_last <= 0; error <= 0; read_index <= 0;
                         cache_valid <= 0; reuse_mode <= 0;
-                        cache_fill <= ui_in[3:0] == 15;
+                        cache_fill <= ui_in[3:0] == 7;
                     end else error <= 1;
                 end
                 REUSE: begin
                     if (reuse_ok) begin
-                        state <= LOAD; remaining <= 15; half <= 0;
+                        state <= LOAD; remaining <= 7; half <= 0;
                         drain_last <= 0; error <= 0; read_index <= 0;
                         reuse_mode <= 1; cache_fill <= 0;
                     end else error <= 1;

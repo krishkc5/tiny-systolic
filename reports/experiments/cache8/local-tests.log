@@ -1,0 +1,67 @@
+verilator --lint-only -Wall --top-module tt_um_krishkc5_tinysystolic -Wno-DECLFILENAME src/mac_pe.v src/systolic_pe.v src/systolic_array.v src/project.v
+- V e r i l a t i o n   R e p o r t: Verilator 5.046 2026-02-28 rev vUNKNOWN-built20260228
+- Verilator: Built from 0.087 MB sources in 5 modules, into 0.058 MB in 3 C++ files needing 0.000 MB
+- Verilator: Walltime 0.019 s (elab=0.004, cvt=0.008, bld=0.000); cpu 0.010 s on 1 threads; allocated 11.000 MB
+mkdir -p build
+verilator --binary --timing --top-module tb_mac -Wno-TIMESCALEMOD --Mdir build/obj src/mac_pe.v src/systolic_pe.v src/systolic_array.v src/project.v test/tb_mac.sv > build/compile.log 2>&1
+./build/obj/Vtb_mac
+PASS: exhaustive MAC arithmetic and controls
+- test/tb_mac.sv:20: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.046 2026-02-28
+- Verilator: $finish at 5us; walltime 0.000 s; speed 33.585 ms/s
+- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB
+verilator --binary --timing --top-module tb_array -Wno-TIMESCALEMOD --Mdir build/array src/mac_pe.v src/systolic_pe.v src/systolic_array.v src/project.v test/tb_array.sv > build/array-compile.log 2>&1
+./build/array/Vtb_array
+PASS: 1600 array operations, all K, full-rate streaming, bubbles, freeze, reset
+- test/tb_array.sv:37: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.046 2026-02-28
+- Verilator: $finish at 598us; walltime 0.009 s; speed 63.665 ms/s
+- Verilator: cpu 0.009 s on 1 threads; allocated 2 MB
+python3 -m unittest discover -s test -p 'test_*.py' -v
+test_extremes (test_reference.ReferenceTest.test_extremes) ... ok
+test_identity (test_reference.ReferenceTest.test_identity) ... ok
+test_reject_invalid (test_reference.ReferenceTest.test_reject_invalid) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+cd test && /Library/Developer/CommandLineTools/usr/bin/make
+rm -f results.xml
+/opt/homebrew/bin/iverilog -o sim_build/rtl/sim.vvp -s tb -g2012 -I/Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src -f sim_build/rtl/cmds.f  /Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src/project.v /Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src/mac_pe.v /Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src/systolic_pe.v /Users/krishnachemudupati/Projects/tt-systolic-ml/test/../src/systolic_array.v /Users/krishnachemudupati/Projects/tt-systolic-ml/test/tb.v
+rm -f results.xml
+COCOTB_TEST_MODULES=test,test_ml,test_reuse COCOTB_TESTCASE=  COCOTB_TOPLEVEL=tb TOPLEVEL_LANG=verilog       \
+		 /opt/homebrew/bin/vvp -m /Users/krishnachemudupati/Projects/tt-systolic-ml/.venv/lib/python3.11/site-packages/cocotb/libs/libcocotbvpi_icarus.so   sim_build/rtl/sim.vvp -fst   
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:242  in gpi_load_users                  Loaded entry library: '/Users/krishnachemudupati/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/libpython3.11.dylib'
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:234  in gpi_load_users                  Running entry func 'initialize' from loaded library '/Users/krishnachemudupati/Projects/tt-systolic-ml/.venv/lib/python3.11/site-packages/cocotb/simulator.cpython-311-darwin.so'
+     -.--ns INFO     pygpi                              ..ib/pygpi/embed.cpp:115  in initialize                      Using Python 3.11.9 interpreter at /Users/krishnachemudupati/Projects/tt-systolic-ml/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:74   in gpi_print_registered_impl       GPI: VPI support registered
+     0.00ns INFO     cocotb.initialize                  Seeding Python random module with 1791677708
+     0.00ns INFO     cocotb.initialize                  Initialized cocotb v2.1.0 from /Users/krishnachemudupati/Projects/tt-systolic-ml/.venv/lib/python3.11/site-packages/cocotb
+     0.00ns INFO     cocotb.initialize                  Running on Icarus Verilog version 13.0 (stable)
+     0.00ns INFO     cocotb.regression                  Running tests
+     0.00ns INFO     cocotb.regression                  running test.complete_chip_arithmetic (1/5)
+1812000.00ns INFO     cocotb.regression                  test.complete_chip_arithmetic passed
+1812000.00ns INFO     cocotb.regression                  running test.protocol_and_recovery (2/5)
+1847200.00ns INFO     cocotb.regression                  test.protocol_and_recovery passed
+1847200.00ns INFO     cocotb.regression                  running test_ml.digits_inference (3/5)
+30485300.00ns INFO     cocotb.tb                          ML result: {'test_images': 360, 'correct': 327, 'accuracy': 0.9083333333333333, 'rtl_predictions_match_integer_model': True, 'tile_transactions': 6660, 'mismatched_tiles': 0, 'protocol_cycles': 286380, 'cycles_per_two_image_batch': 1591.0, 'host': 'bias, rescaling, ReLU, requantization, tile partial-sum combination, argmax', 'measurement': 'rtl simulation; ideal synchronous host; excludes host processing and transport latency'}
+30485300.00ns INFO     cocotb.regression                  test_ml.digits_inference passed
+30485300.00ns INFO     cocotb.regression                  running test_reuse.cache_protocol (4/5)
+30708300.00ns INFO     cocotb.regression                  test_reuse.cache_protocol passed
+30708300.00ns INFO     cocotb.regression                  running test_reuse.cached_digits (5/5)
+56075600.00ns INFO     cocotb.tb                          CACHE ML: {'images': 360, 'correct': 327, 'tiles': 13320, 'mismatches': 0, 'weight_load_transactions': 74, 'reuse_transactions': 13246, 'protocol_cycles': 253672, 'baseline_cycles': 286380, 'scope': 'Full-dataset weight-stationary schedule; excludes host storage/work/transport; not single-image latency'}
+56075600.00ns INFO     cocotb.regression                  test_reuse.cached_digits passed
+56075600.00ns INFO     cocotb.regression                  ***************************************************************************************
+                                                        ** TEST                           STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        ***************************************************************************************
+                                                        ** test.complete_chip_arithmetic   PASS     1812000.00           0.31    5823471.99  **
+                                                        ** test.protocol_and_recovery      PASS       35200.00           0.01    6092249.46  **
+                                                        ** test_ml.digits_inference        PASS    28638100.00           5.09    5622956.44  **
+                                                        ** test_reuse.cache_protocol       PASS      223000.00           0.04    5537930.48  **
+                                                        ** test_reuse.cached_digits        PASS    25367300.00           5.85    4335954.47  **
+                                                        ***************************************************************************************
+                                                        ** TESTS=5 PASS=5 FAIL=0 SKIP=0            56075600.00          11.30    4961677.08  **
+                                                        ***************************************************************************************
+FST info: dumpfile tb.fst opened for output.
+python3 -m cocotb_tools.check_results test/results.xml
