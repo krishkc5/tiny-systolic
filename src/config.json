@@ -25,6 +25,7 @@
   "DESIGN_REPAIR_MAX_SLEW_PCT": 30,
   "DESIGN_REPAIR_MAX_CAP_PCT": 30,
   "CTS_SINK_CLUSTERING_SIZE": 10,
+  "STA_EXTRA_CORNER_TCL_FILE": "dir::sta_audit.tcl",
 
   "//": "Hold slack margin - Increase them in case you are getting hold violations.",
   "PL_RESIZER_HOLD_SLACK_MARGIN": 0.1,
